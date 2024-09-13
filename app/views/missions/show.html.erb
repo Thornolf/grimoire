@@ -9,7 +9,6 @@
     <% @mission.character_sheets.each do |sheet| %>
       <li class="p-4 bg-gray-100 rounded-md shadow-sm">
         <h3 class="font-bold text-lg"><%= link_to sheet.name, mission_character_sheet_path(@mission, sheet) %></h3>
-        <p class="text-sm text-gray-600">Created by: <%= sheet.user.username %></p>
       </li>
     <% end %>
   </ul>

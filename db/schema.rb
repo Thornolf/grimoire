@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_13_102914) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_13_103759) do
   create_table "character_sheets", force: :cascade do |t|
     t.string "name"
     t.integer "mission_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "strength"
+    t.integer "constitution"
+    t.integer "dexterity"
+    t.integer "intelligence"
+    t.integer "power"
+    t.integer "charisma"
+    t.integer "hit_points"
+    t.integer "willpower_points"
+    t.integer "sanity"
+    t.integer "breaking_point"
+    t.integer "luck"
     t.index ["mission_id"], name: "index_character_sheets_on_mission_id"
     t.index ["user_id"], name: "index_character_sheets_on_user_id"
   end

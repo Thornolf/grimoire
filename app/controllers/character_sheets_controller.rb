@@ -15,13 +15,17 @@ class CharacterSheetsController < ApplicationController
   end
 
   def new
-    @character_sheet = current_user.character_sheets.build(mission: @mission)
+    @mission = Mission.find(params[:mission_id])
+    @character_sheet = @mission.character_sheets.build
   end
 
   def create
-    @character_sheet = current_user.character_sheets.build(character_sheet_params)
+    @mission = Mission.find(params[:mission_id])
+    @character_sheet = @mission.character_sheets.build(character_sheet_params)
+    @character_sheet.user = current_user
+
     if @character_sheet.save
-      redirect_to [ @mission, @character_sheet ], notice: "Character sheet was successfully created."
+      redirect_to mission_path(@mission), notice: "Character Sheet successfully created."
     else
       render :new
     end
@@ -46,13 +50,15 @@ class CharacterSheetsController < ApplicationController
   private
 
   def set_character_sheet
+    @mission = Mission.find_by(id: params[:mission_id])
     @character_sheet = @mission.character_sheets.find(params[:id])
   end
 
   def character_sheet_params
-    params.require(:character_sheet).permit(:name, :data, :mission_id)
+    params
+      .require(:character_sheet)
+      .permit(:name, :data, :mission_id, :strength, :constitution, :dexterity, :intelligence, :power, :charisma)
   end
-
   def authorize_user!
     unless current_user == @character_sheet.user || current_user.game_master?
       redirect_to mission_character_sheets_path(@mission), alert: "You are not authorized to perform this action."

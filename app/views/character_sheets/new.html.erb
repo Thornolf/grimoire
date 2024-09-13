@@ -1,0 +1,53 @@
+<h1 class="text-3xl font-bold mb-4">Create a New Character Sheet</h1>
+
+<%= form_with model: [@mission, @character_sheet], local: true do |form| %>
+
+  <!-- Character Name -->
+  <div class="mb-4">
+    <%= form.label :name, "Character Name", class: "block font-semibold mb-2" %>
+    <%= form.text_field :name, class: "border border-gray-300 rounded w-full p-2", required: true %>
+  </div>
+
+  <!-- Primary Stats -->
+  <h2 class="text-2xl font-semibold mb-4">Primary Stats (Max 72 points total)</h2>
+
+  <div class="grid grid-cols-2 gap-4 mb-4">
+    <div>
+      <%= form.label :strength, "Strength (STR)", class: "block font-semibold mb-2" %>
+      <%= form.number_field :strength, class: "border border-gray-300 rounded w-full p-2", required: true, min: 0, max: 18 %>
+    </div>
+
+    <div>
+      <%= form.label :constitution, "Constitution (CON)", class: "block font-semibold mb-2" %>
+      <%= form.number_field :constitution, class: "border border-gray-300 rounded w-full p-2", required: true, min: 0, max: 18 %>
+    </div>
+
+    <div>
+      <%= form.label :dexterity, "Dexterity (DEX)", class: "block font-semibold mb-2" %>
+      <%= form.number_field :dexterity, class: "border border-gray-300 rounded w-full p-2", required: true, min: 0, max: 18 %>
+    </div>
+
+    <div>
+      <%= form.label :intelligence, "Intelligence (INT)", class: "block font-semibold mb-2" %>
+      <%= form.number_field :intelligence, class: "border border-gray-300 rounded w-full p-2", required: true, min: 0, max: 18 %>
+    </div>
+
+    <div>
+      <%= form.label :power, "Power (POW)", class: "block font-semibold mb-2" %>
+      <%= form.number_field :power, class: "border border-gray-300 rounded w-full p-2", required: true, min: 0, max: 18 %>
+    </div>
+
+    <div>
+      <%= form.label :charisma, "Charisma (CHA)", class: "block font-semibold mb-2" %>
+      <%= form.number_field :charisma, class: "border border-gray-300 rounded w-full p-2", required: true, min: 0, max: 18 %>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mt-4">
+    <%= form.submit "Create Character Sheet", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+
+<% end %>
+
+<%= link_to 'Back to Character Sheets', mission_character_sheets_path(@mission), class: 'mt-4 block text-blue-500 hover:underline' %>
