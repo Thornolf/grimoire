@@ -5,4 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   enum :role, %i[user game_master]
+
+  has_many :character_sheets
+  has_many :missions
 end

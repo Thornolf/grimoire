@@ -1,26 +1,47 @@
+<!-- app/views/layouts/application.html.erb -->
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Grimoire" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Grimoire</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="bg-gray-100 text-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo / Home link -->
+        <div>
+          <%= link_to 'Grimoire', root_path, class: 'text-white font-bold text-xl' %>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="space-x-4">
+          <%= link_to 'Missions', missions_path, class: 'text-gray-300 hover:text-white' %>
+          <%= link_to 'Character Sheets', character_sheets_path, class: 'text-gray-300 hover:text-white' %>
+        </div>
+
+        <!-- Authentication Links -->
+        <div>
+          <% if user_signed_in? %>
+            <span class="text-gray-300 mr-4">Welcome, <%= current_user.username %></span>
+            <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+          <% else %>
+            <%= link_to 'Sign up', new_user_registration_path, class: 'text-gray-300 hover:text-white' %>
+            <%= link_to 'Log in', new_user_session_path, class: 'ml-4 text-gray-300 hover:text-white' %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-6">
       <%= yield %>
-    </main>
+    </div>
   </body>
 </html>

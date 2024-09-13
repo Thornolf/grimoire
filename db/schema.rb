@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_12_213416) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_12_213553) do
+  create_table "character_sheets", force: :cascade do |t|
+    t.string "name"
+    t.integer "mission_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mission_id"], name: "index_character_sheets_on_mission_id"
+  end
+
   create_table "handouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -43,6 +51,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_12_213416) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "character_sheets", "missions"
   add_foreign_key "handouts", "missions"
   add_foreign_key "missions", "game_masters"
 end

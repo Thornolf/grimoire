@@ -1,0 +1,16 @@
+<h1>All Missions</h1>
+
+<% if @missions.any? %>
+  <ul>
+    <% @missions.each do |mission| %>
+      <li>
+        <h3><%= link_to mission.title, mission_path(mission) %></h3>
+        <p><%= mission.description %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No missions available.</p>
+<% end %>
+
+<%= link_to 'Create New Mission', new_mission_path, class: 'btn btn-primary' %>
