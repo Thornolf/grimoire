@@ -5,13 +5,15 @@ class CharacterSheetsController < ApplicationController
 
   def index
     if current_user.game_master?
-      @character_sheets = @mission.character_sheets
+      @character_sheets = CharacterSheet.all
     else
-      @character_sheets = current_user.character_sheets.where(mission: @mission)
+      @character_sheets = current_user.character_sheets
     end
   end
 
   def show
+    @mission = Mission.find(params[:mission_id])
+    @character_sheet = @mission.character_sheets.find(params[:id])
   end
 
   def new

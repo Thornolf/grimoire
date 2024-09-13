@@ -1,0 +1,60 @@
+<h1 class="text-3xl font-bold mb-4">Character Sheet: <%= @character_sheet.name %></h1>
+
+<!-- Primary Stats -->
+<h2 class="text-2xl font-semibold mb-4">Primary Stats</h2>
+
+<div class="grid grid-cols-2 gap-4 mb-4">
+  <div>
+    <p><strong>Strength (STR):</strong> <%= @character_sheet.strength %></p>
+  </div>
+
+  <div>
+    <p><strong>Constitution (CON):</strong> <%= @character_sheet.constitution %></p>
+  </div>
+
+  <div>
+    <p><strong>Dexterity (DEX):</strong> <%= @character_sheet.dexterity %></p>
+  </div>
+
+  <div>
+    <p><strong>Intelligence (INT):</strong> <%= @character_sheet.intelligence %></p>
+  </div>
+
+  <div>
+    <p><strong>Power (POW):</strong> <%= @character_sheet.power %></p>
+  </div>
+
+  <div>
+    <p><strong>Charisma (CHA):</strong> <%= @character_sheet.charisma %></p>
+  </div>
+</div>
+
+<!-- Secondary Stats -->
+<h2 class="text-2xl font-semibold mb-4">Secondary Stats</h2>
+
+<div class="grid grid-cols-2 gap-4 mb-4">
+  <div>
+    <p><strong>Hit Points (HP):</strong> <%= @character_sheet.hit_points %></p>
+  </div>
+
+  <div>
+    <p><strong>Willpower Points (WP):</strong> <%= @character_sheet.willpower_points %></p>
+  </div>
+
+  <div>
+    <p><strong>Sanity (SAN):</strong> <%= @character_sheet.sanity %></p>
+  </div>
+
+  <div>
+    <p><strong>Breaking Point:</strong> <%= @character_sheet.breaking_point %></p>
+  </div>
+
+  <div>
+    <p><strong>Luck:</strong> <%= @character_sheet.luck %></p>
+  </div>
+</div>
+
+<!-- Back Button -->
+<div class="mt-4">
+  <%= link_to 'Back to Character Sheets', mission_character_sheets_path(@character_sheet.mission), class: 'text-blue-500 hover:underline' %>
+</div>
