@@ -1,3 +1,4 @@
 class Mission < ApplicationRecord
-  belongs_to :game_master, class_name: "User"
+  belongs_to :user
+  has_many :character_sheets
 end

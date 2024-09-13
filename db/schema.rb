@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_12_213553) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_13_101312) do
   create_table "character_sheets", force: :cascade do |t|
     t.string "name"
     t.integer "mission_id", null: false
@@ -31,10 +31,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_12_213553) do
   create_table "missions", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "game_master_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_master_id"], name: "index_missions_on_game_master_id"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_missions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,5 +53,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_12_213553) do
 
   add_foreign_key "character_sheets", "missions"
   add_foreign_key "handouts", "missions"
-  add_foreign_key "missions", "game_masters"
+  add_foreign_key "missions", "users"
 end

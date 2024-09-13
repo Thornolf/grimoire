@@ -1,3 +1,3 @@
 class CharacterSheet < ApplicationRecord
-  belongs_to :player, class_name: "User"
+  belongs_to :user
 end
