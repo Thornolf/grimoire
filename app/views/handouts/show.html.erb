@@ -1,0 +1,13 @@
+<h1><%= @handout.title %></h1>
+
+<% if @handout.file.attached? %>
+  <div class="mb-4">
+    <% if @handout.file.content_type.start_with?('image/') %>
+      <%= image_tag @handout.file %>
+    <% elsif @handout.file.content_type.start_with?('audio/') %>
+      <%= audio_tag @handout.file, controls: true %>
+    <% else %>
+      <%= link_to "Download File", url_for(@handout.file), class: "text-blue-500 hover:underline" %>
+    <% end %>
+  </div>
+<% end %>

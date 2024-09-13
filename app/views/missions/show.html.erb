@@ -18,4 +18,19 @@
 
 <%= link_to 'Create New Character Sheet', new_mission_character_sheet_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
 
+<% if @mission.handouts.any? %>
+  <ul class="space-y-2">
+    <% @mission.handouts.each do |handout| %>
+      <li class="p-4 bg-gray-100 rounded-md shadow-sm">
+        <h3 class="font-bold text-lg"><%= link_to handout.title, mission_handout_path(@mission, handout) %></h3>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-gray-600">No handout have been created for this mission yet.</p>
+<% end %>
+
+<%= link_to 'Create New Handout', new_mission_handout_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
+
+
 <%= link_to 'Back to Missions', missions_path, class: 'mt-4 block text-blue-500 hover:underline' %>

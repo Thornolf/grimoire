@@ -5,7 +5,7 @@ class HandoutsController < ApplicationController
   before_action :authorize_game_master!, except: [ :index, :show ]
 
   def index
-    @handouts = @mission.handouts
+    @handout = @mission.handouts.build
   end
 
   def show
@@ -51,7 +51,7 @@ class HandoutsController < ApplicationController
   end
 
   def handout_params
-    params.require(:handout).permit(:title, :content)
+    params.require(:handout).permit(:title, :content, :file)
   end
 
   def authorize_game_master!
