@@ -1,13 +1,40 @@
-<h1><%= @handout.title %></h1>
+<h1 class="text-3xl font-bold mb-4"><%= @handout.title %></h1>
 
+<!-- Display Rich Text Content in a Card -->
+<div class="bg-white p-6 rounded-lg shadow-md mb-4 border border-gray-200">
+  <h2 class="text-xl font-semibold mb-2">Content</h2>
+  <div class="prose prose-lg">
+    <%= @handout.content.body %>
+  </div>
+</div>
+
+<!-- Display Attached File in a Card -->
 <% if @handout.file.attached? %>
-  <div class="mb-4">
+  <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-4">
+    <h2 class="text-xl font-semibold mb-2">Attached File</h2>
+
     <% if @handout.file.content_type.start_with?('image/') %>
-      <%= image_tag @handout.file %>
+      <!-- Image with modal trigger -->
+      <div class="cursor-pointer" data-controller="modal" data-action="click->modal#toggle">
+        <%= image_tag @handout.file, class: "rounded-lg max-w-xs hover:opacity-80" %>
+      </div>
+
+      <!-- Modal for larger image view -->
+      <div id="imageModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50" data-modal-target="modal">
+        <div class="bg-white p-4 rounded-lg shadow-md relative">
+          <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" data-action="modal#hide">X</button>
+          <%= image_tag @handout.file, class: "rounded-lg max-w-full" %>
+        </div>
+      </div>
     <% elsif @handout.file.content_type.start_with?('audio/') %>
-      <%= audio_tag @handout.file, controls: true %>
+      <%= audio_tag @handout.file, controls: true, class: "w-full mt-2" %>
     <% else %>
       <%= link_to "Download File", url_for(@handout.file), class: "text-blue-500 hover:underline" %>
     <% end %>
   </div>
 <% end %>
+
+<!-- Back to Mission Link -->
+<div class="mt-6">
+  <%= link_to 'Back to Mission', mission_path(@handout.mission), class: 'text-blue-500 hover:underline' %>
+</div>
