@@ -14,16 +14,15 @@
     <h2 class="text-xl font-semibold mb-2">Attached File</h2>
 
     <% if @handout.file.content_type.start_with?('image/') %>
-      <!-- Image with modal trigger -->
-      <div class="cursor-pointer" data-controller="modal" data-action="click->modal#toggle">
-        <%= image_tag @handout.file, class: "rounded-lg max-w-xs hover:opacity-80" %>
-      </div>
-
-      <!-- Modal for larger image view -->
-      <div id="imageModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50" data-modal-target="modal">
-        <div class="bg-white p-4 rounded-lg shadow-md relative">
-          <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" data-action="modal#hide">X</button>
-          <%= image_tag @handout.file, class: "rounded-lg max-w-full" %>
+      <div data-controller="modal">
+        <div class="cursor-pointer" data-action="click->modal#toggle">
+          <%= image_tag @handout.file, class: "rounded-lg max-w-xs hover:opacity-80" %>
+        </div>
+        <div id="imageModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50" data-modal-target="modal">
+          <div class="bg-white p-4 rounded-lg shadow-md relative">
+            <%= image_tag @handout.file, class: "rounded-lg max-w-full" %>
+            <button class="absolute top-4 right-4 bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-900 font-bold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out" data-action="modal#hide">X</button>
+          </div>
         </div>
       </div>
     <% elsif @handout.file.content_type.start_with?('audio/') %>
