@@ -30,7 +30,31 @@
   <p class="text-gray-600">No handout have been created for this mission yet.</p>
 <% end %>
 
-<%= link_to 'Create New Handout', new_mission_handout_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
+<div class="bg-white shadow-md rounded-lg p-6 mb-4">
+  <!-- Flex container for the button and form -->
+  <div class="flex justify-between items-start space-x-4">
 
+    <!-- Create New Handout Button on the left -->
+    <div>
+      <%= link_to 'Create New Handout', new_mission_handout_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded inline-block hover:bg-blue-700' %>
+    </div>
+
+    <!-- Dropdown form on the right with more spacing -->
+    <div class="w-full max-w-md">
+      <%= form_with url: mission_add_handout_to_path(@mission), method: :post, local: true do |form| %>
+        <div class="mb-4">
+          <%= form.label :handout_id, "Select Handout to Add", class: "block font-semibold mb-2" %>
+          <%= form.collection_select :handout_id, Handout.where.not(id: @mission.handouts.pluck(:id)), :id, :title, prompt: "Choose a Handout", class: "border border-gray-300 rounded w-full p-2" %>
+        </div>
+
+        <div class="mt-4">
+          <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
+            Add Handout to Mission
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Back to Missions', missions_path, class: 'mt-4 block text-blue-500 hover:underline' %>

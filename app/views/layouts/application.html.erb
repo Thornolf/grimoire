@@ -10,21 +10,27 @@
   </head>
 
   <body class="bg-gray-100 text-gray-900">
-    <!-- Navbar -->
     <nav class="bg-gray-800 p-4">
       <div class="container mx-auto flex justify-between items-center">
-        <!-- Logo / Home link -->
         <div>
           <%= link_to 'Grimoire', root_path, class: 'text-white font-bold text-xl' %>
         </div>
 
-        <!-- Navigation Links -->
         <div class="space-x-4">
           <%= link_to 'Missions', missions_path, class: 'text-gray-300 hover:text-white' %>
           <%= link_to 'Character Sheets', character_sheets_path, class: 'text-gray-300 hover:text-white' %>
         </div>
 
-        <!-- Authentication Links -->
+        <% if flash[:success] %>
+          <div class="bg-green-500 text-white p-4 rounded mb-4">
+            <%= flash[:success] %>
+          </div>
+        <% elsif flash[:error] %>
+          <div class="bg-red-500 text-white p-4 rounded mb-4">
+            <%= flash[:error] %>
+          </div>
+        <% end %>
+
         <div>
           <% if user_signed_in? %>
             <span class="text-gray-300 mr-4">Welcome, <%= current_user.username %></span>
@@ -37,7 +43,6 @@
       </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container mx-auto mt-6">
       <%= yield %>
     </div>

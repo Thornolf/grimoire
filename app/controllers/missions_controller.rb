@@ -41,6 +41,21 @@ class MissionsController < ApplicationController
     redirect_to missions_url, notice: "Mission was successfully destroyed."
   end
 
+  def add_handout
+    @mission = Mission.find(params[:mission_id])
+    @handout = Handout.find(params[:handout_id])
+
+    # Add the handout to the mission
+    if @mission.handouts << @handout
+      flash[:success] = "Handout successfully added to mission."
+    else
+      flash[:error] = "There was a problem adding the handout."
+    end
+
+    # Redirect back to the mission show page
+    redirect_to mission_path(@mission)
+  end
+
   private
 
   def set_mission
