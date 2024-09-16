@@ -18,28 +18,33 @@
 
 <%= link_to 'Create New Character Sheet', new_mission_character_sheet_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
 
+<h2 class="text-2xl font-semibold mb-2">Handouts</h2>
+
 <% if @mission.handouts.any? %>
   <ul class="space-y-2">
     <% @mission.handouts.each do |handout| %>
-      <li class="p-4 bg-gray-100 rounded-md shadow-sm">
-        <h3 class="font-bold text-lg"><%= link_to handout.title, mission_handout_path(@mission, handout) %></h3>
+      <li class="p-4 bg-gray-100 rounded-md shadow-sm flex justify-between items-center">
+        <div>
+          <h3 class="font-bold text-lg"><%= link_to handout.title, mission_handout_path(@mission, handout) %></h3>
+        </div>
+
+        <!-- Remove Handout Button -->
+        <div>
+          <%= button_to 'Remove', mission_remove_handout_from_path(@mission, handout), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+        </div>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p class="text-gray-600">No handout have been created for this mission yet.</p>
+  <p class="text-gray-600">No handout has been created for this mission yet.</p>
 <% end %>
 
 <div class="bg-white shadow-md rounded-lg p-6 mb-4">
-  <!-- Flex container for the button and form -->
   <div class="flex justify-between items-start space-x-4">
-
-    <!-- Create New Handout Button on the left -->
     <div>
       <%= link_to 'Create New Handout', new_mission_handout_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded inline-block hover:bg-blue-700' %>
     </div>
 
-    <!-- Dropdown form on the right with more spacing -->
     <div class="w-full max-w-md">
       <%= form_with url: mission_add_handout_to_path(@mission), method: :post, local: true do |form| %>
         <div class="mb-4">

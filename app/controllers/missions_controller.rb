@@ -56,6 +56,21 @@ class MissionsController < ApplicationController
     redirect_to mission_path(@mission)
   end
 
+  def remove_handout
+    @mission = Mission.find(params[:mission_id])
+    @handout = Handout.find(params[:handout_id])
+
+    # Remove the handout from the mission's handouts
+    if @mission.handouts.delete(@handout)
+      flash[:success] = "Handout successfully removed from the mission."
+    else
+      flash[:error] = "There was a problem removing the handout."
+    end
+
+    # Redirect back to the mission show page
+    redirect_to mission_path(@mission)
+  end
+
   private
 
   def set_mission
