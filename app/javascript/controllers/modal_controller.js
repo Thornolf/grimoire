@@ -10,4 +10,8 @@ export default class extends Controller {
   hide() {
     this.modalTarget.classList.add("hidden");
   }
+
+  stopPropagation(event) {
+    event.stopPropagation();
+  }
 }

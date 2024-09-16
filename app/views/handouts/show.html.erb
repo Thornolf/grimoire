@@ -1,7 +1,8 @@
-<h1 class="text-3xl font-bold mb-4"><%= @handout.title %></h1>
+<!-- Title moved outside of the card container -->
+<h1 class="text-3xl font-bold mb-4 text-center"><%= @handout.title %></h1>
 
 <!-- Display Rich Text Content in a Card -->
-<div class="bg-white p-6 rounded-lg shadow-md mb-4 border border-gray-200">
+<div class="bg-white p-6 rounded-lg shadow-md mb-4 border border-gray-200 max-w-2xl mx-auto">
   <h2 class="text-xl font-semibold mb-2">Content</h2>
   <div class="prose prose-lg">
     <%= @handout.content.body %>
@@ -10,16 +11,17 @@
 
 <!-- Display Attached File in a Card -->
 <% if @handout.file.attached? %>
-  <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-4">
+  <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 mb-4 mx-auto text-center">
     <h2 class="text-xl font-semibold mb-2">Attached File</h2>
 
     <% if @handout.file.content_type.start_with?('image/') %>
       <div data-controller="modal">
         <div class="cursor-pointer" data-action="click->modal#toggle">
-          <%= image_tag @handout.file, class: "rounded-lg max-w-xs hover:opacity-80" %>
+          <%= image_tag @handout.file, class: "rounded-lg max-w-xs hover:opacity-80 mx-auto" %>
         </div>
-        <div id="imageModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50" data-modal-target="modal">
-          <div class="bg-white p-4 rounded-lg shadow-md relative">
+
+        <div id="imageModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50" data-modal-target="modal" data-action="click->modal#hide">
+          <div class="bg-white p-4 rounded-lg shadow-md relative" data-action="click->modal#stopPropagation">
             <%= image_tag @handout.file, class: "rounded-lg max-w-full" %>
             <button class="absolute top-4 right-4 bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-900 font-bold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out" data-action="modal#hide">X</button>
           </div>
