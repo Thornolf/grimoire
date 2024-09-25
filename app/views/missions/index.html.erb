@@ -8,7 +8,7 @@
           <%= link_to mission.title, mission_path(mission), class: "hover:underline" %>
         </h3>
         <p class="text-gray-600">
-          <%= mission.description.truncate(100) %> <!-- Truncate to avoid long descriptions -->
+          <%= mission&.description&.truncate(100) %> <!-- Truncate to avoid long descriptions -->
         </p>
       </div>
     <% end %>
@@ -17,6 +17,8 @@
   <p class="text-gray-600">No missions available.</p>
 <% end %>
 
-<div class="mt-6">
-  <%= link_to 'Create New Mission', new_mission_path, class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition' %>
-</div>
+<% if current_user.game_master?%>
+  <div class="mt-6">
+    <%= link_to 'Create New Mission', new_mission_path, class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition' %>
+  </div>
+<% end %>

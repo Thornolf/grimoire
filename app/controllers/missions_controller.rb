@@ -4,7 +4,7 @@ class MissionsController < ApplicationController
   before_action :authorize_game_master!, except: [ :index, :show ]
 
   def index
-    @missions = Mission.all
+    @missions = current_user.missions
   end
 
   def show

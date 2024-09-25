@@ -4,15 +4,34 @@
 
 <h2 class="text-2xl font-semibold mb-2">Character Sheets</h2>
 
-<% if @mission.character_sheets.any? %>
+<% if @character_sheets.any? %>
   <ul class="space-y-2">
-    <% @mission.character_sheets.each do |sheet| %>
+    <% @character_sheets.each do |character_sheet| %>
       <li class="p-4 bg-gray-100 rounded-md shadow-sm">
-        <h3 class="font-bold text-lg"><%= link_to sheet.name, mission_character_sheet_path(@mission, sheet) %></h3>
+        <div>
+          <h3 class="font-bold text-lg"><%= link_to "#{character_sheet.user.username} | #{character_sheet.name}", mission_character_sheet_path(@mission, character_sheet) %></h3>
+        </div>
+
+        <div>
+          <%= button_to 'Remove', mission_remove_character_sheet_from_path(@mission, character_sheet), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+        </div>
       </li>
     <% end %>
+    </div>
   </ul>
 <% else %>
+  <div class="mb-4">
+    <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true do |form| %>
+      <%= form.label :character_sheet_id, "Select CharacterSheet to Add", class: "block font-semibold mb-2" %>
+      <%= form.collection_select :character_sheet_id, CharacterSheet.where.not(id: @mission.character_sheets.pluck(:id)), :id, :name, prompt: "Choose a CharacterSheet", class: "border border-gray-300 rounded w-full p-2" %>
+    <% end %>
+  </div>
+
+  <div class="mt-4">
+  <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
+    Add CharacterSheet to Mission
+  <% end %>
+
   <p class="text-gray-600">No character sheets have been created for this mission yet.</p>
 <% end %>
 
@@ -28,7 +47,6 @@
           <h3 class="font-bold text-lg"><%= link_to handout.title, mission_handout_path(@mission, handout) %></h3>
         </div>
 
-        <!-- Remove Handout Button -->
         <div>
           <%= button_to 'Remove', mission_remove_handout_from_path(@mission, handout), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
         </div>

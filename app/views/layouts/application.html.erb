@@ -33,7 +33,7 @@
 
         <div>
           <% if user_signed_in? %>
-            <span class="text-gray-300 mr-4">Welcome, <%= current_user.username %></span>
+            <span class="text-gray-300 mr-4"><%= current_user.username %></span>
             <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
           <% else %>
             <%= link_to 'Sign up', new_user_registration_path, class: 'text-gray-300 hover:text-white' %>
