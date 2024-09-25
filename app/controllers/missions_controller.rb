@@ -9,6 +9,7 @@ class MissionsController < ApplicationController
 
   def show
     @mission = Mission.find_by(id: params[:id])
+    @character_sheets = @mission.character_sheets
   end
 
   def new
@@ -41,6 +42,20 @@ class MissionsController < ApplicationController
     redirect_to missions_url, notice: "Mission was successfully destroyed."
   end
 
+  def add_character_sheet
+    @mission = Mission.find(params[:mission_id])
+    @character_sheet = CharacterSheet.find(params[:character_sheet_id])
+
+    if @mission.character_sheets << @character_sheet
+      flash[:success] = "Character sheet successfully added to mission."
+    else
+      flash[:error] = "There was a problem adding the character sheet."
+    end
+
+    # Redirect back to the mission show page
+    redirect_to mission_path(@mission)
+  end
+
   def add_handout
     @mission = Mission.find(params[:mission_id])
     @handout = Handout.find(params[:handout_id])
@@ -65,6 +80,21 @@ class MissionsController < ApplicationController
       flash[:success] = "Handout successfully removed from the mission."
     else
       flash[:error] = "There was a problem removing the handout."
+    end
+
+    # Redirect back to the mission show page
+    redirect_to mission_path(@mission)
+  end
+
+  def remove_character_sheet
+    @mission = Mission.find(params[:mission_id])
+    @character_sheet = CharacterSheet.find(params[:character_sheet_id])
+
+    # Remove the character_sheet from the mission's character_sheets
+    if @mission.character_sheets.delete(@character_sheet)
+      flash[:success] = "CharacterSheet successfully removed from the mission."
+    else
+      flash[:error] = "There was a problem removing the character_sheet."
     end
 
     # Redirect back to the mission show page

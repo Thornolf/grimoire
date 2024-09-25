@@ -1,6 +1,6 @@
 class CharacterSheet < ApplicationRecord
   belongs_to :user
-  belongs_to :mission
+  belongs_to :mission, optional: true
 
   before_save :calculate_secondary_stats
 
