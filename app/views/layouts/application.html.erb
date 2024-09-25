@@ -19,6 +19,12 @@
         <div class="space-x-4">
           <%= link_to 'Missions', missions_path, class: 'text-gray-300 hover:text-white' %>
           <%= link_to 'Character Sheets', character_sheets_path, class: 'text-gray-300 hover:text-white' %>
+
+          <% if user_signed_in? %>
+            <% if current_user.game_master? %>
+              <%= link_to 'Manage Skills', skills_path, class: 'text-gray-300 hover:text-white' %>
+            <% end %>
+          <% end %>
         </div>
 
         <% if flash[:success] %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_25_104541) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_25_140429) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -71,6 +71,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_104541) do
     t.index ["user_id"], name: "index_character_sheets_on_user_id"
   end
 
+  create_table "character_skills", force: :cascade do |t|
+    t.integer "character_sheet_id", null: false
+    t.integer "skill_id", null: false
+    t.integer "custom_percentage"
+    t.boolean "used"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_sheet_id"], name: "index_character_skills_on_character_sheet_id"
+    t.index ["skill_id"], name: "index_character_skills_on_skill_id"
+  end
+
   create_table "handouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -98,6 +109,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_104541) do
     t.index ["user_id"], name: "index_missions_users_on_user_id"
   end
 
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.integer "base_percentage"
+    t.string "category"
+    t.boolean "default", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -115,6 +135,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_104541) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "character_sheets", "missions"
+  add_foreign_key "character_skills", "character_sheets"
+  add_foreign_key "character_skills", "skills"
   add_foreign_key "handouts", "missions"
   add_foreign_key "missions_users", "missions"
   add_foreign_key "missions_users", "users"
