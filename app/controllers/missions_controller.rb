@@ -48,7 +48,7 @@ class MissionsController < ApplicationController
     @mission = Mission.find(params[:mission_id])
     @character_sheet = CharacterSheet.find(params[:character_sheet_id])
 
-    if @character_sheet.present? && @mission.present?
+    if @character_sheet && @mission
       @mission.character_sheets << @character_sheet
       MissionsUser.create!(user: @character_sheet.user, mission: @mission, role: @character_sheet.user.role)
 
@@ -95,8 +95,10 @@ class MissionsController < ApplicationController
     @mission = Mission.find(params[:mission_id])
     @character_sheet = CharacterSheet.find(params[:character_sheet_id])
 
-    # Remove the character_sheet from the mission's character_sheets
-    if @mission.character_sheets.delete(@character_sheet)
+    if @mission && @character_sheet
+      @mission.character_sheets.delete(@character_sheet)
+      MissionsUser.find_by(user: @character_sheet.user, mission: @mission, role: @character_sheet.user.role).destroy
+
       flash[:success] = "CharacterSheet successfully removed from the mission."
     else
       flash[:error] = "There was a problem removing the character_sheet."
