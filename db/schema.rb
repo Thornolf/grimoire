@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_25_091731) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_25_101808) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -88,6 +88,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_091731) do
     t.index ["user_id"], name: "index_missions_on_user_id"
   end
 
+  create_table "missions_users", force: :cascade do |t|
+    t.integer "mission_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mission_id", "user_id"], name: "index_missions_users_on_mission_id_and_user_id", unique: true
+    t.index ["mission_id"], name: "index_missions_users_on_mission_id"
+    t.index ["user_id"], name: "index_missions_users_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -107,4 +118,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_091731) do
   add_foreign_key "character_sheets", "missions"
   add_foreign_key "handouts", "missions"
   add_foreign_key "missions", "users"
+  add_foreign_key "missions_users", "missions"
+  add_foreign_key "missions_users", "users"
 end

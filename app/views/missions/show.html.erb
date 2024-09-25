@@ -5,7 +5,7 @@
 <h2 class="text-2xl font-semibold mb-2">Character Sheets</h2>
 
 <% if @character_sheets.any? %>
-  <ul class="space-y-2">
+
     <% @character_sheets.each do |character_sheet| %>
       <li class="p-4 bg-gray-100 rounded-md shadow-sm">
         <div>
@@ -17,23 +17,21 @@
         </div>
       </li>
     <% end %>
-    </div>
-  </ul>
+
 <% else %>
-  <div class="mb-4">
+  <p class="text-gray-600">No character sheets have been created for this mission yet.</p>
+<% end %>
+
+<div class="mb-4">
     <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true do |form| %>
       <%= form.label :character_sheet_id, "Select CharacterSheet to Add", class: "block font-semibold mb-2" %>
       <%= form.collection_select :character_sheet_id, CharacterSheet.where.not(id: @mission.character_sheets.pluck(:id)), :id, :name, prompt: "Choose a CharacterSheet", class: "border border-gray-300 rounded w-full p-2" %>
+
+      <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
+        Add CharacterSheet to Mission
+      <% end %>
     <% end %>
   </div>
-
-  <div class="mt-4">
-  <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
-    Add CharacterSheet to Mission
-  <% end %>
-
-  <p class="text-gray-600">No character sheets have been created for this mission yet.</p>
-<% end %>
 
 <%= link_to 'Create New Character Sheet', new_mission_character_sheet_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
 

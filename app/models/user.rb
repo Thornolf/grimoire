@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   enum :role, %i[player game_master]
 
+  has_many :missions_users
+  has_many :missions, through: :missions_users
+
   has_many :character_sheets
-  has_many :missions
 end
