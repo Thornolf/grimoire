@@ -1,0 +1,19 @@
+<!-- app/views/missions/_player_view.html.erb -->
+
+<h2 class="text-2xl font-semibold mb-2">Character Sheet: </h2>
+
+<%= render 'character_sheet_list', character_sheets: [@character_sheet] %>
+
+<h2 class="text-2xl font-semibold mb-2">Handouts</h2>
+
+<% if @mission.handouts.any? %>
+  <ul class="space-y-2">
+    <% @mission.handouts.each do |handout| %>
+      <li class="p-4 bg-gray-100 rounded-md shadow-sm">
+        <h3 class="font-bold text-lg"><%= link_to handout.title, mission_handout_path(@mission, handout) %></h3>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-gray-600">No handout has been created for this mission yet.</p>
+<% end %>

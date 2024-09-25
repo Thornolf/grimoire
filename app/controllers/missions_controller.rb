@@ -9,7 +9,11 @@ class MissionsController < ApplicationController
 
   def show
     @mission = Mission.find_by(id: params[:id])
-    @character_sheets = @mission.character_sheets
+    if current_user.game_master?
+      @character_sheets = @mission.character_sheets
+    else
+      @character_sheet = current_user.character_sheets.find_by(mission_id: @mission.id)
+    end
   end
 
   def new

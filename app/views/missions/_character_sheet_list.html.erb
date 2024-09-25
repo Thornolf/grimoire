@@ -1,0 +1,56 @@
+<ul class="space-y-4">
+  <% if character_sheets.any? %>
+    <% character_sheets.each do |character_sheet| %>
+      <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+        <!-- Collapsible Details Component -->
+        <details class="group">
+          <!-- Summary header (always visible) -->
+          <summary class="cursor-pointer flex justify-between items-center">
+            <!-- Character Name -->
+            <h3 class="text-lg font-bold">
+              <%= "#{character_sheet.user.username} | #{character_sheet.name}" %>
+            </h3>
+
+            <!-- Remove Button for Game Masters only -->
+            <% if current_user == @mission.game_master %>
+              <%= button_to 'Remove', mission_remove_character_sheet_from_path(@mission, character_sheet), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+            <% end %>
+          </summary>
+
+          <!-- Expanded Content (Displayed when the details is open) -->
+          <div class="mt-4">
+            <!-- Primary Stats -->
+            <h2 class="text-2xl font-semibold mb-4">Primary Stats</h2>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div><p><strong>Strength (STR):</strong> <%= character_sheet.strength %></p></div>
+              <div><p><strong>Constitution (CON):</strong> <%= character_sheet.constitution %></p></div>
+              <div><p><strong>Dexterity (DEX):</strong> <%= character_sheet.dexterity %></p></div>
+              <div><p><strong>Intelligence (INT):</strong> <%= character_sheet.intelligence %></p></div>
+              <div><p><strong>Power (POW):</strong> <%= character_sheet.power %></p></div>
+              <div><p><strong>Charisma (CHA):</strong> <%= character_sheet.charisma %></p></div>
+            </div>
+
+            <!-- Secondary Stats -->
+            <h2 class="text-2xl font-semibold mb-4">Secondary Stats</h2>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div><p><strong>Hit Points (HP):</strong> <%= character_sheet.hit_points %></p></div>
+              <div><p><strong>Willpower Points (WP):</strong> <%= character_sheet.willpower_points %></p></div>
+              <div><p><strong>Sanity (SAN):</strong> <%= character_sheet.sanity %></p></div>
+              <div><p><strong>Breaking Point:</strong> <%= character_sheet.breaking_point %></p></div>
+              <div><p><strong>Luck:</strong> <%= character_sheet.luck %></p></div>
+            </div>
+
+            <!-- Profession Stats (or a Third Section) -->
+            <h2 class="text-2xl font-semibold mb-4">Profession Stats</h2>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div><p><strong>Profession 1:</strong> <%= "profession 1" %></p></div>
+              <div><p><strong>Profession 2:</strong> <%= "profession 2" %></p></div>
+              <div><p><strong>Profession 3:</strong> <%= "profession 3" %></p></div>
+              <!-- Add more fields as needed -->
+            </div>
+          </div>
+        </details>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
