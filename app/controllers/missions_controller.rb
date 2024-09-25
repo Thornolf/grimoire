@@ -48,7 +48,10 @@ class MissionsController < ApplicationController
     @mission = Mission.find(params[:mission_id])
     @character_sheet = CharacterSheet.find(params[:character_sheet_id])
 
-    if @mission.character_sheets << @character_sheet
+    if @character_sheet.present? && @mission.present?
+      @mission.character_sheets << @character_sheet
+      MissionsUser.create!(user: @character_sheet.user, mission: @mission, role: @character_sheet.user.role)
+
       flash[:success] = "Character sheet successfully added to mission."
     else
       flash[:error] = "There was a problem adding the character sheet."
