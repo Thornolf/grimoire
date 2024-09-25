@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_25_101808) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_25_104541) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_101808) do
     t.integer "sanity"
     t.integer "breaking_point"
     t.integer "luck"
+    t.integer "kind", default: 0, null: false
     t.index ["mission_id"], name: "index_character_sheets_on_mission_id"
     t.index ["user_id"], name: "index_character_sheets_on_user_id"
   end
@@ -84,8 +85,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_101808) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_missions_on_user_id"
   end
 
   create_table "missions_users", force: :cascade do |t|
@@ -117,7 +116,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_101808) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "character_sheets", "missions"
   add_foreign_key "handouts", "missions"
-  add_foreign_key "missions", "users"
   add_foreign_key "missions_users", "missions"
   add_foreign_key "missions_users", "users"
 end

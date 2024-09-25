@@ -2,6 +2,8 @@
 
 <p class="mb-6"><%= @mission.description %></p>
 
+<p class="mb-6">The game master for this mission is <%= @mission.game_master.username %></p>
+<p class="mb-6">The players for this mission are <%= @mission.players.pluck(:username).join(",") %></p>
 <h2 class="text-2xl font-semibold mb-2">Character Sheets</h2>
 
 <% if @character_sheets.any? %>

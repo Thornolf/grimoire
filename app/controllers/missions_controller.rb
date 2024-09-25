@@ -18,6 +18,8 @@ class MissionsController < ApplicationController
 
   def create
     @mission = current_user.missions.build(mission_params)
+    MissionsUser.create!(user: current_user, mission: @mission, role: current_user.role)
+
     if @mission.save
       redirect_to @mission, notice: "Mission was successfully created."
     else

@@ -9,6 +9,7 @@ class CharacterSheet < ApplicationRecord
             numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 18 }
   validate :primary_stats_total_points
 
+  enum :kind, %i[player npc]
   private
 
   def primary_stats_total_points

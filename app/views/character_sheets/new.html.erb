@@ -50,4 +50,10 @@
 
 <% end %>
 
-<%= link_to 'Back to Character Sheets', mission_character_sheets_path(@mission), class: 'mt-4 block text-blue-500 hover:underline' %>
+<div class="mt-4">
+  <% if @character_sheet.mission %>
+    <%= link_to 'Back to Character Sheets', mission_character_sheets_path(@character_sheet.mission), class: 'text-blue-500 hover:underline' %>
+  <% else %>
+    <%= link_to 'Back to Character Sheets', character_sheets_path, class: 'text-blue-500 hover:underline' %>
+  <% end %>
+</div>

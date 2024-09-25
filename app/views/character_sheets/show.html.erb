@@ -56,5 +56,9 @@
 
 <!-- Back Button -->
 <div class="mt-4">
-  <%= link_to 'Back to Character Sheets', mission_character_sheets_path(@character_sheet.mission), class: 'text-blue-500 hover:underline' %>
+  <% if @character_sheet.mission %>
+    <%= link_to 'Back to Mission', mission_path(@character_sheet.mission), class: 'text-blue-500 hover:underline' %>
+  <% else %>
+    <%= link_to 'Back to Character Sheets', character_sheets_path, class: 'text-blue-500 hover:underline' %>
+  <% end %>
 </div>

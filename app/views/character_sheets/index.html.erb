@@ -2,10 +2,13 @@
 
 <div class="grid grid-cols-1 gap-6">
   <% @character_sheets.each do |character_sheet| %>
-    <!-- Card for each character sheet -->
     <div class="p-4 bg-white shadow-md rounded-lg border border-gray-200">
       <h2 class="text-xl font-semibold mb-2">
-        <%= link_to character_sheet.name, mission_character_sheet_path(character_sheet.mission, character_sheet), class: 'text-blue-500 hover:underline' %>
+        <% if character_sheet.mission %>
+           <%= link_to character_sheet.name, mission_character_sheet_path(character_sheet.mission, character_sheet), class: 'text-blue-500 hover:underline' %>
+        <% else %>
+           <%= link_to character_sheet.name, character_sheet_path(character_sheet), class: 'text-blue-500 hover:underline' %>
+        <% end %>
       </h2>
 
       <p class="text-gray-600">
@@ -14,3 +17,5 @@
     </div>
   <% end %>
 </div>
+
+<%= link_to 'Create New Character Sheet', new_character_sheet_path, class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
