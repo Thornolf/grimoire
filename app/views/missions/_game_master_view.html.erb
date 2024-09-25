@@ -5,6 +5,7 @@
 <%= render 'character_sheet_list', character_sheets: @character_sheets %>
 
 <!-- Add Character Sheet Form -->
+</br>
 <div class="mb-4">
   <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true do |form| %>
     <%= form.label :character_sheet_id, "Select CharacterSheet to Add", class: "block font-semibold mb-2" %>

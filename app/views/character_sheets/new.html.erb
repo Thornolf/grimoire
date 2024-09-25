@@ -43,7 +43,19 @@
     </div>
   </div>
 
-  <!-- Submit Button -->
+  <h2 class="text-2xl font-semibold mb-4">Skills</h2>
+
+ <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+    <% Skill.where(default: true).each do |skill| %>
+      <div class="border border-gray-300 p-4 rounded-lg">
+        <%= fields_for "character_sheet[skills]", skill do |skill_fields| %>
+          <%= form.label "#{skill.name} (#{skill.base_percentage}%)", class: "block font-semibold mb-2" %>
+          <%= skill_fields.number_field "#{skill.id}", value: skill.base_percentage, class: "border border-gray-300 rounded w-full mt-2", required: true, min: skill.base_percentage %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="mt-4">
     <%= form.submit "Create Character Sheet", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
   </div>

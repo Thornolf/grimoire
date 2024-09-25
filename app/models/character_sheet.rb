@@ -2,7 +2,7 @@ class CharacterSheet < ApplicationRecord
   belongs_to :user
   belongs_to :mission, optional: true
 
-  has_many :character_skills
+  has_many :character_skills, dependent: :destroy
   has_many :skills, through: :character_skills
 
   before_save :calculate_secondary_stats

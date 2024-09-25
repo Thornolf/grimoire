@@ -7,14 +7,16 @@ class MissionsController < ApplicationController
     @missions = current_user.missions
   end
 
-  def show
-    @mission = Mission.find_by(id: params[:id])
-    if current_user.game_master?
-      @character_sheets = @mission.character_sheets
-    else
-      @character_sheet = current_user.character_sheets.find_by(mission_id: @mission.id)
-    end
+def show
+  @mission = Mission.find_by(id: params[:id])
+
+  if current_user.game_master?
+    # Eager load character_sheets with character_skills and skills to avoid N+1 query issues
+    @character_sheets = @mission.character_sheets.includes(character_skills: :skill)
+  else
+    @character_sheet = current_user.character_sheets.includes(character_skills: :skill).find_by(mission_id: @mission.id)
   end
+end
 
   def new
     @mission = current_user.missions.build

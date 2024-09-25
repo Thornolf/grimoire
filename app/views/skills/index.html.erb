@@ -1,0 +1,38 @@
+<h1 class="text-3xl font-bold mb-8">Manage Skills</h1>
+</br>
+<!-- Button to create a new skill -->
+<div class="mb-6">
+  <%= link_to "Create New Skill", new_skill_path, class: "bg-blue-500 px-6 py-2 rounded-lg shadow-md hover:bg-green-600" %>
+</div>
+
+<!-- Display Skills -->
+<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+  <% @skills.each do |skill| %>
+    <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+      <h2 class="text-xl font-semibold mb-2 text-blue-700"><%= skill.name %></h2>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Category:</span> <%= skill.category %>
+      </p>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Base Percentage:</span> <%= skill.base_percentage %>%
+      </p>
+
+      <p class="text-gray-600 mb-4">
+        <span class="font-semibold">Default Skill:</span> <%= skill.default ? "Yes" : "No" %>
+      </p>
+
+      <div class="flex justify-between space-x-2">
+        <!-- Buttons for Edit and Delete -->
+        <%= link_to "Edit", edit_skill_path(skill), class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600" %>
+        <%= button_to "Delete", skill_path(skill), method: :delete, data: { confirm: "Are you sure?" }, class: "bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Back to Dashboard or Missions -->
+<div class="mt-8">
+  <%= link_to "Back to Dashboard", root_path, class: "text-blue-500 hover:underline" %>
+</div>

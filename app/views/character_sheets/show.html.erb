@@ -54,7 +54,18 @@
   </div>
 </div>
 
-<!-- Back Button -->
+<!-- TODO: update this query taking a long ass time -->
+<h2 class="text-2xl font-semibold mb-4">Skills</h2>
+
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+  <% @character_sheet.skills.each do |skill| %>
+    <% character_skill = @character_sheet.character_skills.find_by(skill_id: skill.id) %>
+    <div>
+      <p><strong><%= skill.name %>:</strong> <%= character_skill.custom_percentage %> %</p>
+    </div>
+  <% end %>
+</div>
+
 <div class="mt-4">
   <% if @character_sheet.mission %>
     <%= link_to 'Back to Mission', mission_path(@character_sheet.mission), class: 'text-blue-500 hover:underline' %>

@@ -29,6 +29,8 @@ class CharacterSheetsController < ApplicationController
     else
       @character_sheet = CharacterSheet.new
     end
+    # Load default skills for display
+    @skills = Skill.where(default: true)
   end
 
   # Create action for both standalone and mission-based character sheets
@@ -41,29 +43,38 @@ class CharacterSheetsController < ApplicationController
     @character_sheet.user = current_user
 
     if @character_sheet.save
+      # Save skills from form input
+      save_character_skills(@character_sheet)
+
       if @mission
         redirect_to mission_path(@mission), notice: "Character Sheet successfully created."
       else
         redirect_to character_sheets_path, notice: "Character Sheet successfully created."
       end
     else
+      @skills = Skill.where(default: true) # Re-load skills if save fails
       render :new
     end
   end
 
   # Edit action
   def edit
+    @skills = Skill.where(default: true)
   end
 
   # Update action for both standalone and mission-based character sheets
   def update
     if @character_sheet.update(character_sheet_params)
+      # Save skills from form input
+      save_character_skills(@character_sheet)
+
       if @mission
         redirect_to [ @mission, @character_sheet ], notice: "Character sheet was successfully updated."
       else
         redirect_to @character_sheet, notice: "Character sheet was successfully updated."
       end
     else
+      @skills = Skill.where(default: true) # Re-load skills if update fails
       render :edit
     end
   end
@@ -107,6 +118,16 @@ class CharacterSheetsController < ApplicationController
       else
         redirect_to character_sheets_path, alert: "You are not authorized to perform this action."
       end
+    end
+  end
+
+  def save_character_skills(character_sheet)
+    params["character_sheet"]["skills"].each do |skill_id, custom_percentage|
+      character_sheet_skill = CharacterSkill.find_or_initialize_by(
+        character_sheet: character_sheet,
+        skill_id: skill_id
+      )
+      character_sheet_skill.update(custom_percentage: custom_percentage)
     end
   end
 end

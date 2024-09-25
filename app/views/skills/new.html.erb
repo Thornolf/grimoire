@@ -1,0 +1,29 @@
+<h1 class="text-3xl font-bold mb-4">Create a New Skill</h1>
+
+<%= form_with(model: @skill, local: true) do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, "Skill Name", class: "block font-semibold mb-2" %>
+    <%= form.text_field :name, class: "border border-gray-300 rounded w-full p-2", required: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :base_percentage, "Base Percentage", class: "block font-semibold mb-2" %>
+    <%= form.number_field :base_percentage, class: "border border-gray-300 rounded w-full p-2", required: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :category, "Category", class: "block font-semibold mb-2" %>
+    <%= form.text_field :category, class: "border border-gray-300 rounded w-full p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :default, "Is Default?", class: "block font-semibold mb-2" %>
+    <%= form.check_box :default, class: "border border-gray-300 rounded" %>
+  </div>
+
+  <div class="mt-4">
+    <%= form.submit "Create Skill", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Skills', skills_path, class: 'text-blue-500 hover:underline mt-4 block' %>
