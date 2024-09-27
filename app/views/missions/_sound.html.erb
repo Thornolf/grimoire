@@ -1,9 +1,18 @@
 <div id="sound_<%= sound.id %>" class="bg-gray-100 p-4 rounded-md flex justify-between items-center">
-  <div>
-    <p class="font-bold text-lg"><%= sound.title %></p>
-    <%= audio_tag url_for(sound.file), controls: true, class: "w-full mt-2" %>
-  </div>
-  <div>
-    <%= button_to 'Remove', mission_remove_sound_from_path(@mission, sound), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
-  </div>
+  <li class="p-4 bg-gray-100 rounded-md shadow-sm flex justify-between items-center">
+    <div>
+      <h3 class="font-bold text-lg"><%= sound.title %></h3>
+    </div>
+    <div>
+      <%= audio_tag url_for(sound.file), controls: true, class: "w-full mt-2" %>
+    </div>
+    <div>
+      <%= button_to 'Remove', mission_remove_sound_from_path(@mission, sound), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+    </div>
+
+    <div data-controller="audio-player" class="flex space-x-2">
+      <!-- Play button with data-action -->
+      <%= button_to 'Play', play_mission_sound_path(@mission, sound), method: :post, data: { turbo_stream: true, action: "audio-player#playAudio" }, class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+    </div>
+  </li>
 </div>

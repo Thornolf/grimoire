@@ -125,7 +125,7 @@ end
   end
 
   def remove_sound
-    @mission = Mission.find(params[:id])
+    @mission = Mission.find(params[:mission_id])
     @sound = @mission.sounds.find(params[:sound_id])
     @mission.sounds.delete(@sound)
     respond_to do |format|

@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     resources :handouts
     resources :character_sheets
 
+    resources :sounds do
+      post "play", on: :member
+    end
+
     post "add_handout", to: "missions#add_handout", as: "add_handout_to"
     delete "remove_handout/:handout_id", to: "missions#remove_handout", as: "remove_handout_from"
 

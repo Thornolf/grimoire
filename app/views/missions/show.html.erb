@@ -4,11 +4,16 @@
 
 <p class="mb-6">The game master for this mission is <%= @mission.game_master.username %> and party is formed with <%= @mission.players.pluck(:username).join(", ") %></p>
 
+<!-- Turbo frame for playing sounds -->
+<div id="mission_<%= @mission.id %>_play_sound">
+  <!-- This frame will be dynamically updated when a sound is played -->
+</div>
+
 <!-- Conditional Rendering of Views Based on User Role -->
 <% if current_user == @mission.game_master %>
-  <%= render 'game_master_view' %>
+  <%= render 'game_master_view', mission: @mission %>
 <% else %>
-  <%= render 'player_view' %>
+  <%= render 'player_view', mission: @mission %>
 <% end %>
 
 <%= link_to 'Back to Missions', missions_path, class: 'mt-4 block text-blue-500 hover:underline' %>

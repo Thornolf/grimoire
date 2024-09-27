@@ -57,6 +57,21 @@ class SoundsController < ApplicationController
     end
   end
 
+  def play
+    @sound = Sound.find(params[:id])
+    @mission = Mission.find(params[:mission_id])
+
+    Turbo::StreamsChannel.broadcast_replace_to(
+      @mission,
+      target: "mission_#{@mission.id}_play_sound",
+      partial: "sounds/play",
+      locals: { sound: @sound, mission: @mission }
+    )
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sound
@@ -66,5 +81,9 @@ class SoundsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def sound_params
       params.require(:sound).permit(:title, :description, :file)
+    end
+
+    def set_mission
+      @mission = Mission.find(params[:mission_id])
     end
 end
