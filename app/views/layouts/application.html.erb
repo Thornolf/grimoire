@@ -27,16 +27,6 @@
           <% end %>
         </div>
 
-        <% if flash[:success] %>
-          <div class="bg-green-500 text-white p-4 rounded mb-4">
-            <%= flash[:success] %>
-          </div>
-        <% elsif flash[:error] %>
-          <div class="bg-red-500 text-white p-4 rounded mb-4">
-            <%= flash[:error] %>
-          </div>
-        <% end %>
-
         <div>
           <% if user_signed_in? %>
             <span class="text-gray-300 mr-4"><%= current_user.username %></span>
@@ -50,6 +40,16 @@
     </nav>
 
     <div class="container mx-auto mt-6">
+      <% if flash[:success] %>
+        <div class="bg-green-500 text-white p-4 rounded mb-4">
+          <%= flash[:success] %>
+        </div>
+      <% elsif flash[:error] %>
+        <div class="bg-red-500 text-white p-4 rounded mb-4">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>

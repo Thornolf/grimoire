@@ -1,6 +1,6 @@
 <ul class="space-y-4">
-  <% if @character_sheets.any? %>
-    <% @character_sheets.each do |character_sheet| %>
+  <% if character_sheets.any? %>
+    <% character_sheets.each do |character_sheet| %>
       <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
         <!-- Collapsible Details Component -->
         <details class="group">
@@ -40,15 +40,17 @@
               <div><p><strong>Luck:</strong> <%= character_sheet.luck %></p></div>
             </div>
 
-            <!-- Skills Section (replacing Profession) -->
-            <h2 class="text-2xl font-semibold mb-4">Skills</h2>
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <% character_sheet.character_skills.each do |character_skill| %>
-                <div>
-                  <p><strong><%= character_skill.skill.name %>:</strong> <%= character_skill.custom_percentage %> %</p>
-                </div>
-              <% end %>
-            </div>
+            <!-- Skills Section Collapsible -->
+            <details class="group mt-4">
+              <summary class="cursor-pointer text-lg font-semibold">Skills (Click to expand/collapse)</summary>
+              <div class="grid grid-cols-2 gap-4 mt-4">
+                <% character_sheet.character_skills.each do |character_skill| %>
+                  <div>
+                    <p><strong><%= character_skill.skill.name %>:</strong> <%= character_skill.custom_percentage %> %</p>
+                  </div>
+                <% end %>
+              </div>
+            </details>
           </div>
         </details>
       </li>
