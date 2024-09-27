@@ -1,0 +1,17 @@
+<div id="<%= dom_id sound %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Title:</strong>
+    <%= sound.title %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= sound.description %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">File:</strong>
+    <%= link_to sound.file.filename, sound.file if sound.file.attached? %>
+  </p>
+
+</div>

@@ -2,8 +2,7 @@
 
 <p class="mb-6"><%= @mission.description %></p>
 
-<p class="mb-6">The game master for this mission is <%= @mission.game_master.username %></p>
-<p class="mb-6">The players for this mission are <%= @mission.players.pluck(:username).join(", ") %></p>
+<p class="mb-6">The game master for this mission is <%= @mission.game_master.username %> and party is formed with <%= @mission.players.pluck(:username).join(", ") %></p>
 
 <!-- Conditional Rendering of Views Based on User Role -->
 <% if current_user == @mission.game_master %>

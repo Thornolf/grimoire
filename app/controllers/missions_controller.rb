@@ -114,6 +114,26 @@ end
     redirect_to mission_path(@mission)
   end
 
+  def add_sound
+    @mission = Mission.find(params[:mission_id])
+    @sound = Sound.find(params[:sound_id])
+    @mission.sounds << @sound unless @mission.sounds.include?(@sound)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.append("sounds", partial: "missions/sound", locals: { sound: @sound }) }
+      format.html { redirect_to @mission }
+    end
+  end
+
+  def remove_sound
+    @mission = Mission.find(params[:id])
+    @sound = @mission.sounds.find(params[:sound_id])
+    @mission.sounds.delete(@sound)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("sound_#{@sound.id}") }
+      format.html { redirect_to @mission }
+    end
+  end
+
   private
 
   def set_mission
