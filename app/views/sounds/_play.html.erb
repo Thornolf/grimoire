@@ -1,8 +1,6 @@
 <turbo-stream action="replace" target="mission_<%= mission.id %>_play_sound">
   <template>
-    <div id="mission_<%= mission.id %>_play_sound"
-         data-controller="audio-player"
-         data-audio-player-src-value="<%= url_for(sound.file) %>">
+    <div id="mission_<%= mission.id %>_play_sound">
       Now playing: <%= sound.title %>
     </div>
   </template>

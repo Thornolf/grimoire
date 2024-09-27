@@ -11,7 +11,7 @@ export default class extends Controller {
 
   playAudio() {
     console.log("playAudio() called with srcValue:", this.srcValue)
-    const audio = new Audio("/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MSwicHVyIjoiYmxvYl9pZCJ9fQ==--5244a4d5f52543261382ea652d2562b8576a312d/mMurlocAggroOld.ogg")
+    const audio = new Audio(this.srcValue)
     audio.play().catch(error => {
       console.error("Failed to play audio:", error)
     })
