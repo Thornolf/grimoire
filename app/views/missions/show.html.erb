@@ -1,19 +1,24 @@
-<h1 class="text-3xl font-bold mb-4"><%= @mission.title %></h1>
+<%= tag.turbo_cable_stream_source %>
+<%= turbo_stream_from @mission %>
 
-<p class="mb-6"><%= @mission.description %></p>
+<body data-mission-id="<%= @mission.id %>">
+  <h1 class="text-3xl font-bold mb-4"><%= @mission.title %></h1>
 
-<p class="mb-6">The game master for this mission is <%= @mission.game_master.username %> and party is formed with <%= @mission.players.pluck(:username).join(", ") %></p>
+  <p class="mb-6"><%= @mission.description %></p>
 
-<!-- Turbo frame for playing sounds -->
-<div id="mission_<%= @mission.id %>_play_sound">
-  <!-- This frame will be dynamically updated when a sound is played -->
-</div>
+  <p class="mb-6">The game master for this mission is <%= @mission.game_master.username %> and party is formed with <%= @mission.players.pluck(:username).join(", ") %></p>
 
-<!-- Conditional Rendering of Views Based on User Role -->
-<% if current_user == @mission.game_master %>
-  <%= render 'game_master_view', mission: @mission %>
-<% else %>
-  <%= render 'player_view', mission: @mission %>
-<% end %>
+  <!-- Conditional Rendering of Views Based on User Role -->
+  <% if current_user == @mission.game_master %>
+    <%= render 'game_master_view', mission: @mission %>
+  <% else %>
+    <%= render 'player_view', mission: @mission %>
+  <% end %>
 
-<%= link_to 'Back to Missions', missions_path, class: 'mt-4 block text-blue-500 hover:underline' %>
+  <%= link_to 'Back to Missions', missions_path, class: 'mt-4 block text-blue-500 hover:underline' %>
+
+  <div id="play_sound_target">
+    <!-- Placeholder content -->
+    No sound playing yet.
+  </div>
+</body>

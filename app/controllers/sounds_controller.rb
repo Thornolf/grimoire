@@ -63,10 +63,16 @@ class SoundsController < ApplicationController
 
     Turbo::StreamsChannel.broadcast_replace_to(
       @mission,
-      target: "mission_#{@mission.id}_play_sound",
+      target: "play_sound_target",
       partial: "sounds/play",
-      locals: { sound: @sound, mission: @mission }
+      locals: { sound: @sound, mission: @mission },
+      formats: [ :turbo_stream ]
     )
+
+    puts "------------------------------------"
+    puts render_to_string(partial: "sounds/play", locals: { sound: @sound, mission: @mission })
+    puts "------------------------------------"
+
     respond_to do |format|
       format.turbo_stream
     end

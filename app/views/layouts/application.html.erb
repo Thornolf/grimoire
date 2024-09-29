@@ -4,8 +4,12 @@
     <title>Grimoire</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <!-- Your existing CSS imports -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <!-- Load the JavaScript importmap before any other script -->
     <%= javascript_importmap_tags %>
   </head>
 
