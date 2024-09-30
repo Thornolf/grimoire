@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_27_145653) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_30_125923) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -91,6 +91,28 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_27_145653) do
     t.index ["mission_id"], name: "index_handouts_on_mission_id"
   end
 
+  create_table "inventories", force: :cascade do |t|
+    t.integer "character_sheet_id", null: false
+    t.integer "item_id", null: false
+    t.integer "location", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_sheet_id"], name: "index_inventories_on_character_sheet_id"
+    t.index ["item_id"], name: "index_inventories_on_item_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "weight"
+    t.integer "value"
+    t.integer "durability", default: 0, null: false
+    t.integer "rarity", default: 0, null: false
+    t.text "effect"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mission_sounds", force: :cascade do |t|
     t.integer "mission_id", null: false
     t.integer "sound_id", null: false
@@ -154,6 +176,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_27_145653) do
   add_foreign_key "character_skills", "character_sheets"
   add_foreign_key "character_skills", "skills"
   add_foreign_key "handouts", "missions"
+  add_foreign_key "inventories", "character_sheets"
+  add_foreign_key "inventories", "items"
   add_foreign_key "mission_sounds", "missions"
   add_foreign_key "mission_sounds", "sounds"
   add_foreign_key "missions_users", "missions"

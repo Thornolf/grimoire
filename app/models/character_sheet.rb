@@ -2,6 +2,9 @@ class CharacterSheet < ApplicationRecord
   belongs_to :user
   belongs_to :mission, optional: true
 
+  has_many :inventories, dependent: :destroy
+  has_many :items, through: :inventories
+
   has_many :character_skills, dependent: :destroy
   has_many :skills, through: :character_skills
 

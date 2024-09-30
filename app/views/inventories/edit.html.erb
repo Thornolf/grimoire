@@ -1,0 +1,17 @@
+<h1>Edit Inventory</h1>
+
+<%= form_with model: [@character_sheet, @inventory], local: true do |form| %>
+  <div>
+    <%= form.label :item_id, "Select Item" %>
+    <%= form.collection_select :item_id, @items, :id, :name, prompt: "Choose an Item", disabled: true %>
+  </div>
+
+  <div>
+    <%= form.label :location, "Select Location" %>
+    <%= form.select :location, Inventory.locations.keys.map { |loc| [loc.humanize, loc] } %>
+  </div>
+
+  <%= form.submit "Update Inventory" %>
+<% end %>
+
+<%= link_to 'Back', character_sheet_path(@character_sheet) %>

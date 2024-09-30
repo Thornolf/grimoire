@@ -27,6 +27,7 @@
           <% if user_signed_in? %>
             <% if current_user.game_master? %>
               <%= link_to 'Manage Skills', skills_path, class: 'text-gray-300 hover:text-white' %>
+              <%= link_to 'Manage Items', items_path, class: 'text-gray-300 hover:text-white' %>
             <% end %>
           <% end %>
         </div>

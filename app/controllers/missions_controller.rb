@@ -134,6 +134,30 @@ end
     end
   end
 
+  def add_inventory_item
+    @mission = Mission.find(params[:mission_id])
+    @character_sheet = CharacterSheet.find(params[:character_sheet_id])
+    @item = Item.find(params[:item_id])
+    @inventory = Inventory.create(item_id: @item.id, character_sheet_id: @character_sheet.id)
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.append("inventories", partial: "inventories/inventory", locals: { character_sheet: @character_sheet }) }
+      format.html { redirect_to @mission }
+    end
+  end
+
+  def remove_inventory_item
+    @mission = Mission.find(params[:mission_id])
+    @character_sheet = CharacterSheet.find(params[:character_sheet_id])
+    @inventory = @character_sheet.inventories.find(params[:inventory_id])
+    @character_sheet.inventories.delete(@inventory)
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("inventory_#{@inventory.id}") }
+      format.html { redirect_to @mission }
+    end
+  end
+
   private
 
   def set_mission

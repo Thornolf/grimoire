@@ -5,7 +5,10 @@ Rails.application.routes.draw do
 
   resources :missions do
     resources :handouts
-    resources :character_sheets
+    resources :character_sheets do
+      delete "remove_inventory_item/:inventory_id", to: "missions#remove_inventory_item", as: "remove_inventory_item_from"
+      post "add_inventory_item", to: "missions#add_inventory_item", as: "add_inventory_item_to"
+    end
 
     resources :sounds do
       post "play", on: :member
@@ -23,5 +26,8 @@ Rails.application.routes.draw do
 
   resources :sounds, only: [ :index, :new, :create, :edit, :update, :destroy, :show ]
   resources :skills, only: [ :index, :new, :create, :edit, :update, :destroy ]
-  resources :character_sheets, only: [ :index, :new, :create, :edit, :update, :show ]
+  resources :items, only: [ :index, :new, :create, :edit, :update, :destroy ]
+  resources :character_sheets, only: [ :index, :new, :create, :edit, :update, :show ] do
+      resources :inventories, only: [ :new, :create, :edit, :update, :destroy, :show ]
+  end
 end

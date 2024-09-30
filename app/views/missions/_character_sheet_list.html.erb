@@ -52,6 +52,21 @@
               </div>
             </details>
           </div>
+
+          <details class="group mt-4">
+            <summary class="cursor-pointer text-lg font-semibold">Inventory (Click to expand/collapse)</summary>
+            <%= render "inventories/inventory", character_sheet: character_sheet %>
+
+            <div class="mb-4">
+              <%= form_with url: mission_character_sheet_add_inventory_item_to_path(@mission, character_sheet.id), method: :post, local: true do |form| %>
+                <%= form.collection_select :item_id, Item.all.select(:id, :name, :description, :weight, :value, :durability, :rarity, :effect), :id, :name, prompt: "Choose an item", class: "border border-gray-300 rounded w-full p-2" %>
+
+                <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
+                  Add item to inventory
+                <% end %>
+              <% end %>
+            </div>
+          </details>
         </details>
       </li>
     <% end %>
