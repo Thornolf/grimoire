@@ -1,6 +1,4 @@
 <!-- app/views/sounds/_play.turbo_stream.erb -->
-<turbo-stream action="replace" target="play_sound_target">
-  <template>
-    <div>Currently playing sound: <%= sound.title %></div>
-  </template>
-</turbo-stream>
+<div id="play_sound_target" data-controller="audio-player" data-audio-player-src-value="<%= url_for(sound.file) %>">
+  Currently playing sound: <%= sound.title %>
+</div>

@@ -10,7 +10,7 @@
       <%= button_to 'Remove', mission_remove_sound_from_path(@mission, sound), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
     </div>
 
-    <div data-controller="audio-player" data-audio-player-src-value="<%= url_for(sound.file) %>" class="flex space-x-2">
+    <div class="flex space-x-2">
       <%= button_to 'Play', play_mission_sound_path(@mission, sound), method: :post, data: { turbo_stream: true, action: "audio-player#playAudio" }, class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
     </div>
   </li>
