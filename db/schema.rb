@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_30_125923) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_02_162803) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_30_125923) do
     t.integer "breaking_point"
     t.integer "luck"
     t.integer "kind", default: 0, null: false
+    t.text "background"
     t.index ["mission_id"], name: "index_character_sheets_on_mission_id"
     t.index ["user_id"], name: "index_character_sheets_on_user_id"
   end
