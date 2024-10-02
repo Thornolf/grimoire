@@ -8,10 +8,54 @@
     <%= form.text_field :name, class: "border border-gray-300 rounded w-full p-2", required: true %>
   </div>
 
-  <!-- Character Name -->
-  <div class="mb-4">
-    <%= form.label :background, "Background", class: "block font-semibold mb-2" %>
-    <%= form.text_area :background, class: "border border-gray-300 rounded w-full p-2", required: false %>
+  <!-- Background Information -->
+  <h2 class="text-2xl font-semibold mb-4">Background Information</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <%= form.label :background, "Background", class: "block font-semibold mb-2" %>
+      <%= form.text_area :background, class: "border border-gray-300 rounded w-full p-2", required: false %>
+    </div>
+
+    <div>
+      <%= form.label :employer, "Employer", class: "block font-semibold mb-2" %>
+      <%= form.text_field :employer, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
+
+    <div>
+      <%= form.label :gender, "Gender", class: "block font-semibold mb-2" %>
+      <%= form.text_field :gender, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
+
+    <div>
+      <%= form.label :age, "Age", class: "block font-semibold mb-2" %>
+      <%= form.number_field :age, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
+
+    <div>
+      <%= form.label :nationality, "Nationality", class: "block font-semibold mb-2" %>
+      <%= form.text_field :nationality, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
+
+    <div>
+      <%= form.label :motivation, "Motivation", class: "block font-semibold mb-2" %>
+      <%= form.text_area :motivation, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
+
+    <div>
+      <%= form.label :profession, "Profession", class: "block font-semibold mb-2" %>
+      <%= form.text_field :profession, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
+
+    <div>
+      <%= form.label :rank, "Rank", class: "block font-semibold mb-2" %>
+      <%= form.text_field :rank, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
+
+    <div>
+      <%= form.label :occupation_history, "Occupation History", class: "block font-semibold mb-2" %>
+      <%= form.text_field :occupation_history, class: "border border-gray-300 rounded w-full p-2" %>
+    </div>
   </div>
 
   <!-- Primary Stats -->
@@ -72,6 +116,7 @@
     <!-- Button to add more bounds -->
     <button type="button" class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-700" data-action="click->bounds#addBound">Add Bound</button>
   </div>
+  </br>
 
   <!-- Skills -->
   <h2 class="text-2xl font-semibold mb-4">Skills</h2>

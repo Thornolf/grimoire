@@ -105,24 +105,31 @@ class CharacterSheetsController < ApplicationController
   end
 
   def character_sheet_params
-    params
-      .require(:character_sheet)
-      .permit(
-        :name,
-        :mission_id,
-        :strength,
-        :constitution,
-        :dexterity,
-        :intelligence,
-        :power,
-        :charisma,
-        :hit_points,
-        :willpower_points,
-        :sanity,
-        :breaking_point,
-        :luck,
-        bounds_attributes: [ :id, :name, :description, :score, :_destroy ]
-      )
+    params.require(:character_sheet).permit(
+      :name,
+      :mission_id,
+      :strength,
+      :constitution,
+      :dexterity,
+      :intelligence,
+      :power,
+      :charisma,
+      :hit_points,
+      :willpower_points,
+      :sanity,
+      :breaking_point,
+      :luck,
+      :employer,
+      :gender,
+      :age,
+      :nationality,
+      :motivation,
+      :profession,
+      :rank,
+      :background,
+      :occupation_history,
+      bounds_attributes: [ :id, :name, :description, :score, :_destroy ]
+    )
   end
 
   def authorize_user!
