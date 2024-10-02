@@ -1,0 +1,120 @@
+<li class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+  <!-- Collapsible Details Component -->
+  <details class="group">
+    <!-- Summary header (always visible) -->
+    <summary class="cursor-pointer flex justify-between items-center">
+      <h3 class="text-lg font-bold flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+        <!-- Character Name -->
+        <span class="text-xl">
+          <%= character_sheet.name %>
+        </span>
+
+        <!-- If a user is associated, show the username with a user icon -->
+        <% if character_sheet.user %>
+          <span class="flex items-center space-x-1 text-sm bg-blue-200 text-blue-800 rounded-full px-2 py-1 ml-2">
+            <span><%= character_sheet.user.username %></span>
+          </span>
+        <% end %>
+      </h3>
+
+      <!-- Remove Button for Game Masters only -->
+      <% if mission && current_user == mission.game_master %>
+        <%= button_to 'Remove', mission_remove_character_sheet_from_path(mission, character_sheet), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+      <% end %>
+    </summary>
+
+    <div class="mt-4">
+      <!-- Basic Information Section -->
+      <details class="group mb-6">
+        <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+          Basic Information
+        </summary>
+        <div class="grid grid-cols-2 gap-6 mt-4 p-4 bg-gray-50 rounded-lg shadow-inner">
+          <div><p><strong>Employer:</strong> <span class="text-gray-800"><%= character_sheet.employer %></span></p></div>
+          <div><p><strong>Gender:</strong> <span class="text-gray-800"><%= character_sheet.gender %></span></p></div>
+          <div><p><strong>Age:</strong> <span class="text-gray-800"><%= character_sheet.age %></span></p></div>
+          <div><p><strong>Nationality:</strong> <span class="text-gray-800"><%= character_sheet.nationality %></span></p></div>
+          <div><p><strong>Motivation:</strong> <span class="text-gray-800"><%= character_sheet.motivation %></span></p></div>
+          <div><p><strong>Profession:</strong> <span class="text-gray-800"><%= character_sheet.profession %></span></p></div>
+          <div><p><strong>Rank:</strong> <span class="text-gray-800"><%= character_sheet.rank %></span></p></div>
+          <div><p><strong>Occupation History:</strong> <span class="text-gray-800"><%= character_sheet.occupation_history %></span></p></div>
+        </div>
+      </details>
+
+      <!-- Primary Stats Section -->
+      <h2 class="text-2xl font-semibold mb-4 text-gray-700">Primary Stats</h2>
+      <div class="grid grid-cols-2 gap-4 mb-4 p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg shadow-inner">
+        <div><p><strong>Strength (STR):</strong> <%= character_sheet.strength %></p></div>
+        <div><p><strong>Constitution (CON):</strong> <%= character_sheet.constitution %></p></div>
+        <div><p><strong>Dexterity (DEX):</strong> <%= character_sheet.dexterity %></p></div>
+        <div><p><strong>Intelligence (INT):</strong> <%= character_sheet.intelligence %></p></div>
+        <div><p><strong>Power (POW):</strong> <%= character_sheet.power %></p></div>
+        <div><p><strong>Charisma (CHA):</strong> <%= character_sheet.charisma %></p></div>
+      </div>
+
+      <!-- Secondary Stats Section -->
+      <h2 class="text-2xl font-semibold mb-4 text-gray-700">Secondary Stats</h2>
+      <div class="grid grid-cols-2 gap-4 mb-4 p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg shadow-inner">
+        <div><p><strong>Hit Points (HP):</strong> <%= character_sheet.hit_points %></p></div>
+        <div><p><strong>Willpower Points (WP):</strong> <%= character_sheet.willpower_points %></p></div>
+        <div><p><strong>Sanity (SAN):</strong> <%= character_sheet.sanity %></p></div>
+        <div><p><strong>Breaking Point:</strong> <%= character_sheet.breaking_point %></p></div>
+        <div><p><strong>Luck:</strong> <%= character_sheet.luck %></p></div>
+      </div>
+
+      <!-- Bounds Section (Collapsible) -->
+      <details class="group mb-6">
+        <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+          Bounds
+        </summary>
+        <% if character_sheet.bounds.any? %>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 p-4 bg-gray-50 rounded-lg shadow-inner">
+            <% character_sheet.bounds.each do |bound| %>
+              <div class="border-l-4 border-blue-600 bg-blue-50 p-4 rounded-lg">
+                <p class="text-lg font-semibold text-gray-900"><%= bound.name %></p>
+                <p class="text-gray-600 mb-2"><%= bound.description %></p>
+                <p class="text-gray-800"><strong>Score:</strong> <%= bound.score %></p>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-500 italic">No bounds have been defined for this character sheet yet.</p>
+        <% end %>
+      </details>
+
+      <!-- Skills Section Collapsible -->
+      <details class="group mt-4">
+        <summary class="cursor-pointer text-lg font-semibold flex justify-between items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+          Skills (Click to expand/collapse)
+        </summary>
+        <div class="grid grid-cols-2 gap-4 mt-4 p-4 bg-gray-50 rounded-lg shadow-inner">
+          <% character_sheet.character_skills.each do |character_skill| %>
+            <div>
+              <p><strong><%= character_skill.skill.name %>:</strong> <%= character_skill.custom_percentage %> %</p>
+            </div>
+          <% end %>
+        </div>
+      </details>
+
+      <!-- Inventory Section Collapsible -->
+      <details class="group mt-4">
+        <summary class="cursor-pointer text-lg font-semibold flex justify-between items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+          Inventory (Click to expand/collapse)
+        </summary>
+        <%= render "inventories/inventory", character_sheet: character_sheet %>
+
+        <% if mission %>
+          <div class="mb-4">
+            <%= form_with url: mission_character_sheet_add_inventory_item_to_path(mission, character_sheet.id), method: :post, local: true do |form| %>
+              <%= form.collection_select :item_id, Item.all, :id, :name, prompt: "Choose an item", class: "border border-gray-300 rounded w-full p-2" %>
+
+              <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
+                Add item to inventory
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </details>
+    </div>
+  </details>
+</li>

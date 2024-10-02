@@ -1,55 +1,74 @@
-<h2 class="text-2xl font-semibold mb-2">Character Sheets</h2>
+<h2 class="text-3xl font-bold text-blue-600 mb-6 border-b-2 pb-2 border-gray-200">Character Sheets</h2>
 
-<%= render 'character_sheet_list', character_sheets: @character_sheets %>
-
-<br>
 <div class="mb-4">
-  <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true do |form| %>
-    <%= form.label :character_sheet_id, "Select CharacterSheet to Add", class: "block font-semibold mb-2" %>
-    <%= form.collection_select :character_sheet_id, CharacterSheet.where.not(id: @mission.character_sheets.pluck(:id)), :id, :name, prompt: "Choose a CharacterSheet", class: "border border-gray-300 rounded w-full p-2" %>
+  <!-- Collapsible Character Sheets Section -->
+  <details class="group">
+    <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+      Character Sheets
+    </summary>
+    <div class="mt-4">
+      <%= render 'character_sheet_list', character_sheets: @character_sheets %>
+    </div>
+  </details>
 
-    <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
-      Add CharacterSheet to Mission
+  <br>
+
+  <!-- Add Character Sheet Form -->
+  <div class="bg-white shadow-md rounded-lg p-6 mt-4 mb-4">
+    <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true do |form| %>
+      <%= form.label :character_sheet_id, "Select Character Sheet", class: "block font-semibold mb-2" %>
+      <%= form.collection_select :character_sheet_id, CharacterSheet.where.not(id: @mission.character_sheets.pluck(:id)), :id, :name, prompt: "Choose a Character Sheet", class: "border border-gray-300 rounded w-full p-2" %>
+
+      <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700 mt-4' do %>
+        Add Character Sheet to Mission
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+
+  <%= link_to 'Create New Character Sheet', new_mission_character_sheet_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
 </div>
 
-<%= link_to 'Create New Character Sheet', new_mission_character_sheet_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
-
-<h2 class="text-2xl font-semibold mb-2">Handouts</h2>
+<!-- Handouts Section -->
+<h2 class="text-3xl font-bold text-blue-600 mb-6 border-b-2 pb-2 border-gray-200">Handouts</h2>
 
 <% if @mission.handouts.any? %>
-  <ul class="space-y-2">
-    <% @mission.handouts.each do |handout| %>
-      <li class="p-4 bg-gray-100 rounded-md shadow-sm flex justify-between items-center">
-        <div>
-          <h3 class="font-bold text-lg"><%= link_to handout.title, mission_handout_path(@mission, handout) %></h3>
-        </div>
-
-        <div>
-          <%= button_to 'Remove', mission_remove_handout_from_path(@mission, handout), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
+  <details class="group">
+    <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+      Handouts
+    </summary>
+    <ul class="space-y-2 mt-4 p-4 bg-gray-50 rounded-lg shadow-inner">
+      <% @mission.handouts.each do |handout| %>
+        <li class="p-4 bg-white rounded-md shadow-sm flex justify-between items-center">
+          <div>
+            <h3 class="font-bold text-lg"><%= link_to handout.title, mission_handout_path(@mission, handout), class: "text-blue-600 hover:underline" %></h3>
+          </div>
+          <div>
+            <%= button_to 'Remove', mission_remove_handout_from_path(@mission, handout), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </details>
 <% else %>
-  <p class="text-gray-600">No handout has been created for this mission yet.</p>
+  <p class="text-gray-600 italic">No handouts have been created for this mission yet.</p>
 <% end %>
 
-<div class="bg-white shadow-md rounded-lg p-6 mb-4">
-  <div class="flex justify-between items-start space-x-4">
-    <div>
+<!-- Add Handout Form -->
+<div class="bg-white shadow-md rounded-lg p-6 mt-4 mb-4">
+  <div class="flex justify-between items-center space-x-4">
+    <!-- Create New Handout Button -->
+    <div class="ml-auto">
       <%= link_to 'Create New Handout', new_mission_handout_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded inline-block hover:bg-blue-700' %>
     </div>
 
-    <div class="w-full max-w-md">
-      <%= form_with url: mission_add_handout_to_path(@mission), method: :post, local: true do |form| %>
-        <div class="mb-4">
-          <%= form.label :handout_id, "Select Handout to Add", class: "block font-semibold mb-2" %>
+    <!-- Right-aligned Dropdown and Submit Button -->
+    <div class="flex justify-end items-center space-x-4 w-full">
+      <div class="flex-grow">
+        <%= form_with url: mission_add_handout_to_path(@mission), method: :post, local: true do |form| %>
           <%= form.collection_select :handout_id, Handout.where.not(id: @mission.handouts.pluck(:id)), :id, :title, prompt: "Choose a Handout", class: "border border-gray-300 rounded w-full p-2" %>
         </div>
 
-        <div class="mt-4">
+        <div>
           <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
             Add Handout to Mission
           <% end %>
@@ -59,18 +78,25 @@
   </div>
 </div>
 
-<h2 class="text-2xl font-semibold mb-2">Sounds</h2>
-<div class="mb-4">
-  <%= form_with url: mission_add_sound_to_path(@mission), method: :post, local: true do |form| %>
-    <%= form.label :sound_id, "Select Sound", class: "block font-semibold mb-2" %>
-    <%= form.collection_select :sound_id, Sound.all, :id, :title, prompt: "Choose a Sound", class: "border border-gray-300 rounded w-full p-2" %>
+<!-- Sounds Section -->
+<h2 class="text-3xl font-bold text-blue-600 mb-6 border-b-2 pb-2 border-gray-200">Sounds</h2>
 
-    <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
-      Add Sound to Mission
+<details class="group">
+  <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+    Sounds
+  </summary>
+  <div class="mt-4">
+    <%= form_with url: mission_add_sound_to_path(@mission), method: :post, local: true do |form| %>
+      <%= form.label :sound_id, "Select Sound", class: "block font-semibold mb-2" %>
+      <%= form.collection_select :sound_id, Sound.all, :id, :title, prompt: "Choose a Sound", class: "border border-gray-300 rounded w-full p-2" %>
+
+      <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700 mt-4' do %>
+        Add Sound to Mission
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
 
-<div id="sounds" class="space-y-2">
-  <%= render partial: 'missions/sound', collection: @mission.sounds, as: :sound %>
-</div>
+  <div id="sounds" class="space-y-2 mt-4 p-4 bg-gray-50 rounded-lg shadow-inner">
+    <%= render partial: 'missions/sound', collection: @mission.sounds, as: :sound %>
+  </div>
+</details>
