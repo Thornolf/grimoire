@@ -1,75 +1,95 @@
-<h1 class="text-3xl font-bold mb-4">Character Sheet: <%= @character_sheet.name %></h1>
+<h1 class="text-3xl font-bold text-blue-600 mb-6 border-b-2 pb-2 border-gray-200">Character Sheet: <%= @character_sheet.name %></h1>
 
 <!-- Primary Stats -->
-<h2 class="text-2xl font-semibold mb-4">Primary Stats</h2>
+<h2 class="text-2xl font-semibold mb-4 text-gray-700">Primary Stats</h2>
 
-<div class="grid grid-cols-2 gap-4 mb-4">
-  <div>
-    <p><strong>Strength (STR):</strong> <%= @character_sheet.strength %></p>
+<div class="grid grid-cols-2 gap-6 mb-6 p-4 bg-white shadow-md rounded-lg">
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Strength (STR):</strong> <span class="text-gray-800"><%= @character_sheet.strength %></span></p>
   </div>
 
-  <div>
-    <p><strong>Constitution (CON):</strong> <%= @character_sheet.constitution %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Constitution (CON):</strong> <span class="text-gray-800"><%= @character_sheet.constitution %></span></p>
   </div>
 
-  <div>
-    <p><strong>Dexterity (DEX):</strong> <%= @character_sheet.dexterity %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Dexterity (DEX):</strong> <span class="text-gray-800"><%= @character_sheet.dexterity %></span></p>
   </div>
 
-  <div>
-    <p><strong>Intelligence (INT):</strong> <%= @character_sheet.intelligence %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Intelligence (INT):</strong> <span class="text-gray-800"><%= @character_sheet.intelligence %></span></p>
   </div>
 
-  <div>
-    <p><strong>Power (POW):</strong> <%= @character_sheet.power %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Power (POW):</strong> <span class="text-gray-800"><%= @character_sheet.power %></span></p>
   </div>
 
-  <div>
-    <p><strong>Charisma (CHA):</strong> <%= @character_sheet.charisma %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Charisma (CHA):</strong> <span class="text-gray-800"><%= @character_sheet.charisma %></span></p>
   </div>
 </div>
 
 <!-- Secondary Stats -->
-<h2 class="text-2xl font-semibold mb-4">Secondary Stats</h2>
+<h2 class="text-2xl font-semibold mb-4 text-gray-700">Secondary Stats</h2>
 
-<div class="grid grid-cols-2 gap-4 mb-4">
-  <div>
-    <p><strong>Hit Points (HP):</strong> <%= @character_sheet.hit_points %></p>
+<div class="grid grid-cols-2 gap-6 mb-6 p-4 bg-white shadow-md rounded-lg">
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Hit Points (HP):</strong> <span class="text-gray-800"><%= @character_sheet.hit_points %></span></p>
   </div>
 
-  <div>
-    <p><strong>Willpower Points (WP):</strong> <%= @character_sheet.willpower_points %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Willpower Points (WP):</strong> <span class="text-gray-800"><%= @character_sheet.willpower_points %></span></p>
   </div>
 
-  <div>
-    <p><strong>Sanity (SAN):</strong> <%= @character_sheet.sanity %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Sanity (SAN):</strong> <span class="text-gray-800"><%= @character_sheet.sanity %></span></p>
   </div>
 
-  <div>
-    <p><strong>Breaking Point:</strong> <%= @character_sheet.breaking_point %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Breaking Point:</strong> <span class="text-gray-800"><%= @character_sheet.breaking_point %></span></p>
   </div>
 
-  <div>
-    <p><strong>Luck:</strong> <%= @character_sheet.luck %></p>
+  <div class="border-b border-gray-300 pb-2">
+    <p><strong>Luck:</strong> <span class="text-gray-800"><%= @character_sheet.luck %></span></p>
   </div>
 </div>
 
-<!-- TODO: update this query taking a long ass time -->
-<h2 class="text-2xl font-semibold mb-4">Skills</h2>
+<!-- Bounds -->
+<h2 class="text-2xl font-semibold mb-4 text-gray-700">Bounds</h2>
 
-<div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+<% if @character_sheet.bounds.any? %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 p-4 bg-white shadow-md rounded-lg">
+    <% @character_sheet.bounds.each do |bound| %>
+      <div class="border-l-4 border-blue-600 bg-blue-50 p-4 rounded-lg">
+        <p class="text-lg font-semibold text-gray-900"><%= bound.name %></p>
+        <p class="text-gray-600 mb-2"><%= bound.description %></p>
+        <p class="text-gray-800"><strong>Score:</strong> <%= bound.score %></p>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-gray-500 italic">No bounds have been defined for this character sheet yet.</p>
+<% end %>
+
+<!-- Skills -->
+<h2 class="text-2xl font-semibold mb-4 text-gray-700">Skills</h2>
+
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-6 mb-6 p-4 bg-white shadow-md rounded-lg">
   <% @character_sheet.skills.each do |skill| %>
+    <!-- TODO: update this query taking a long ass time -->
     <% character_skill = @character_sheet.character_skills.find_by(skill_id: skill.id) %>
-    <div>
-      <p><strong><%= skill.name %>:</strong> <%= character_skill.custom_percentage %> %</p>
+    <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-lg">
+      <p class="font-semibold text-gray-900"><%= skill.name %></p>
+      <p class="text-gray-600"><strong>Custom Percentage:</strong> <%= character_skill.custom_percentage %> %</p>
     </div>
   <% end %>
 </div>
 
-<div class="mt-4">
+<!-- Navigation Links -->
+<div class="mt-8">
   <% if @character_sheet.mission %>
-    <%= link_to 'Back to Mission', mission_path(@character_sheet.mission), class: 'text-blue-500 hover:underline' %>
+    <%= link_to 'Back to Mission', mission_path(@character_sheet.mission), class: 'text-blue-600 hover:text-blue-800 underline' %>
   <% else %>
-    <%= link_to 'Back to Character Sheets', character_sheets_path, class: 'text-blue-500 hover:underline' %>
+    <%= link_to 'Back to Character Sheets', character_sheets_path, class: 'text-blue-600 hover:text-blue-800 underline' %>
   <% end %>
 </div>

@@ -49,9 +49,33 @@
     </div>
   </div>
 
-  <h2 class="text-2xl font-semibold mb-4">Skills</h2>
+  <!-- Dynamic Bounds -->
+  <h2 class="text-2xl font-semibold mb-4">Bounds</h2>
+  <div data-controller="bounds">
+    <div id="bounds-list">
+      <%= form.fields_for :bounds do |bound_form| %>
+        <div class="mb-4 border border-gray-300 p-4 rounded-lg">
+          <%= bound_form.label :name, "Bound Name", class: "block font-semibold mb-2" %>
+          <%= bound_form.text_field :name, class: "border border-gray-300 rounded w-full p-2" %>
 
- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          <%= bound_form.label :description, "Description", class: "block font-semibold mb-2" %>
+          <%= bound_form.text_area :description, class: "border border-gray-300 rounded w-full p-2" %>
+
+          <%= bound_form.label :score, "Score", class: "block font-semibold mb-2" %>
+          <%= bound_form.number_field :score, class: "border border-gray-300 rounded w-full p-2", min: 0 %>
+
+          <%= link_to "Remove", "#", data: { action: "click->bounds#removeBound", target: bound_form.index }, class: "text-red-500 hover:text-red-700 mt-2 block" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Button to add more bounds -->
+    <button type="button" class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-700" data-action="click->bounds#addBound">Add Bound</button>
+  </div>
+
+  <!-- Skills -->
+  <h2 class="text-2xl font-semibold mb-4">Skills</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
     <% Skill.where(default: true).each do |skill| %>
       <div class="border border-gray-300 p-4 rounded-lg">
         <%= fields_for "character_sheet[skills]", skill do |skill_fields| %>
@@ -65,7 +89,6 @@
   <div class="mt-4">
     <%= form.submit "Create Character Sheet", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
   </div>
-
 <% end %>
 
 <div class="mt-4">

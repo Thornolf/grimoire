@@ -43,7 +43,6 @@ class CharacterSheetsController < ApplicationController
     @character_sheet.user = current_user
 
     if @character_sheet.save
-      # Save skills from form input
       save_character_skills(@character_sheet)
 
       if @mission
@@ -52,7 +51,7 @@ class CharacterSheetsController < ApplicationController
         redirect_to character_sheets_path, notice: "Character Sheet successfully created."
       end
     else
-      @skills = Skill.where(default: true) # Re-load skills if save fails
+      @skills = Skill.where(default: true)
       render :new
     end
   end
@@ -108,7 +107,22 @@ class CharacterSheetsController < ApplicationController
   def character_sheet_params
     params
       .require(:character_sheet)
-      .permit(:name, :mission_id, :strength, :constitution, :dexterity, :intelligence, :power, :charisma, :hit_points, :willpower_points, :sanity, :breaking_point, :luck)
+      .permit(
+        :name,
+        :mission_id,
+        :strength,
+        :constitution,
+        :dexterity,
+        :intelligence,
+        :power,
+        :charisma,
+        :hit_points,
+        :willpower_points,
+        :sanity,
+        :breaking_point,
+        :luck,
+        bounds_attributes: [ :id, :name, :description, :score, :_destroy ]
+      )
   end
 
   def authorize_user!

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_02_162803) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_02_164846) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -47,6 +47,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_162803) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "bounds", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "score"
+    t.integer "character_sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_sheet_id"], name: "index_bounds_on_character_sheet_id"
   end
 
   create_table "character_sheets", force: :cascade do |t|
@@ -173,6 +183,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_162803) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bounds", "character_sheets"
   add_foreign_key "character_sheets", "missions"
   add_foreign_key "character_skills", "character_sheets"
   add_foreign_key "character_skills", "skills"

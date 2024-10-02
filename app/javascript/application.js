@@ -9,11 +9,13 @@ import "./channels/mission_channel"
 // Stimulus controller registration
 import ModalController from "./controllers/modal_controller"
 import AudioPlayerController from "./controllers/audio_player_controller"
+import BoundsController from "./controllers/bounds_controller"
 
 const application = Application.start()
 
 application.register("modal", ModalController)
 application.register("audio-player", AudioPlayerController)
+application.register("bounds", BoundsController)
 
 // FIXME: NOT SUPPOSED TO BE IN PROD JUST FOR DEBUGGING DO NOT COMMIT
 window.application = application
