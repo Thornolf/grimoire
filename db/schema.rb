@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_02_181221) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_02_214340) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -154,7 +154,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_181221) do
     t.integer "role", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["mission_id", "user_id"], name: "index_missions_users_on_mission_id_and_user_id", unique: true
     t.index ["mission_id"], name: "index_missions_users_on_mission_id"
     t.index ["user_id"], name: "index_missions_users_on_user_id"
   end
