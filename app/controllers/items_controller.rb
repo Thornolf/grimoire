@@ -21,7 +21,7 @@ class ItemsController < ApplicationController
 
     if @item.save
       respond_to do |format|
-        format.turbo_stream  # Automatically renders a Turbo Stream response
+        format.turbo_stream
         format.html { redirect_to items_path, notice: "Item was successfully created." }
       end
     else
@@ -39,16 +39,25 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/:id
   def update
     if @item.update(item_params)
-      redirect_to items_path, notice: "Item was successfully updated."
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to items_path, notice: "Item was successfully updated." }
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("item-#{@item.id}", partial: "items/form", locals: { item: @item }) }
+        format.html { render :edit }
+      end
     end
   end
 
   # DELETE /items/:id
   def destroy
     @item.destroy
-    redirect_to items_url, notice: "Item was successfully deleted."
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to items_url, notice: "Item was successfully deleted." }
+    end
   end
 
   private
@@ -60,6 +69,6 @@ class ItemsController < ApplicationController
 
   # Only allow trusted parameters
   def item_params
-    params.require(:item).permit(:name, :description, :weight, :value, :durability, :rarity, :effect)
+    params.permit(:name, :description, :weight, :value, :durability, :rarity, :effect)
   end
 end

@@ -1,7 +1,7 @@
 <!-- app/views/items/create.turbo_stream.erb -->
 
-<%= turbo_stream.append 'items' do %>
-  <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<%= turbo_stream.append "items-list" do %>
+  <div id="item-<%= @item.id %>" class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
     <h2 class="text-xl font-semibold mb-2 text-blue-700"><%= @item.name %></h2>
 
     <p class="text-gray-600 mb-2">
