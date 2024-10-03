@@ -18,10 +18,17 @@ class ItemsController < ApplicationController
   # POST /items
   def create
     @item = Item.new(item_params)
+
     if @item.save
-      redirect_to items_path, notice: "Item was successfully created."
+      respond_to do |format|
+        format.turbo_stream  # Automatically renders a Turbo Stream response
+        format.html { redirect_to items_path, notice: "Item was successfully created." }
+      end
     else
-      render :new
+      respond_to do |format|
+        format.turbo_stream { render :new }
+        format.html { render :new }
+      end
     end
   end
 

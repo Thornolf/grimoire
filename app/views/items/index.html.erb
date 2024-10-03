@@ -1,12 +1,8 @@
 <h1 class="text-3xl font-bold mb-8">Manage Items</h1>
 </br>
-<!-- Button to create a new item -->
-<div class="mb-6">
-  <%= link_to "Create New Item", new_item_path, class: "bg-blue-500 px-6 py-2 rounded-lg shadow-md hover:bg-green-600" %>
-</div>
 
 <!-- Display Items -->
-<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+<div id="items" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
   <% @items.each do |item| %>
     <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
       <h2 class="text-xl font-semibold mb-2 text-blue-700"><%= item.name %></h2>
@@ -42,6 +38,60 @@
       </div>
     </div>
   <% end %>
+
+  <!-- Empty Card with "+" Sign -->
+  <div data-controller="new-item" class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 flex justify-center items-center hover:shadow-xl transition-shadow duration-300">
+    <div data-new-item-target="plusSign" class="cursor-pointer text-4xl font-bold text-blue-600" data-action="click->new-item#toggleForm">+</div>
+
+    <!-- Hidden Form -->
+    <div data-new-item-target="form" class="hidden w-full">
+      <%= turbo_frame_tag :new_item do %>
+        <%= form_with model: Item.new, url: items_path, method: :post, data: { turbo_frame: 'new_item' } do |form| %>
+          <div class="mb-4">
+            <%= form.label :name, "Item Name", class: "block font-semibold mb-2" %>
+            <%= form.text_field :name, class: "border border-gray-300 rounded w-full p-2", required: true %>
+          </div>
+
+          <div class="mb-4">
+            <%= form.label :description, "Description", class: "block font-semibold mb-2" %>
+            <%= form.text_area :description, class: "border border-gray-300 rounded w-full p-2" %>
+          </div>
+
+          <div class="mb-4">
+            <%= form.label :weight, "Weight (kg)", class: "block font-semibold mb-2" %>
+            <%= form.number_field :weight, class: "border border-gray-300 rounded w-full p-2", required: true %>
+          </div>
+
+          <div class="mb-4">
+            <%= form.label :value, "Value ($)", class: "block font-semibold mb-2" %>
+            <%= form.number_field :value, class: "border border-gray-300 rounded w-full p-2" %>
+          </div>
+
+          <div class="mb-4">
+            <%= form.label :durability, "Durability", class: "block font-semibold mb-2" %>
+            <%= form.select :durability, Item.durabilities.keys.map { |dur| [dur.humanize, dur] }, class: "border border-gray-300 rounded w-full p-2" %>
+          </div>
+
+          <div class="mb-4">
+            <%= form.label :rarity, "Rarity", class: "block font-semibold mb-2" %>
+            <%= form.select :rarity, Item.rarities.keys.map { |rar| [rar.humanize, rar] }, class: "border border-gray-300 rounded w-full p-2" %>
+          </div>
+
+          <div class="mb-4">
+            <%= form.label :effect, "Effect (optional)", class: "block font-semibold mb-2" %>
+            <%= form.text_area :effect, class: "border border-gray-300 rounded w-full p-2" %>
+          </div>
+
+          <div class="flex justify-between">
+            <%= button_tag type: 'submit', class: "bg-green-500 px-4 py-2 rounded-lg text-white" do %>
+              Save
+            <% end %>
+            <button type="button" class="bg-red-500 px-4 py-2 rounded-lg text-white" data-action="click->new-item#toggleForm">Cancel</button>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 <!-- Back to Dashboard or Missions -->
