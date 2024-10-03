@@ -1,0 +1,54 @@
+<h1 class="text-3xl font-bold mb-8">Manage Weapons</h1>
+</br>
+<!-- Button to create a new weapon -->
+<div class="mb-6">
+  <%= link_to "Create New Weapon", new_weapon_path, class: "bg-blue-500 px-6 py-2 rounded-lg shadow-md hover:bg-green-600" %>
+</div>
+
+<!-- Display Weapons -->
+<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+  <% @weapons.each do |weapon| %>
+    <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+      <h2 class="text-xl font-semibold mb-2 text-blue-700"><%= weapon.name %></h2>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Skill Percentage:</span> <%= weapon.skill_percentage %>%
+      </p>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Base Range:</span> <%= weapon.base_range %> meters
+      </p>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Damage:</span> <%= weapon.damage %>
+      </p>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Armor Piercing:</span> <%= weapon.armor_piercing %>
+      </p>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Lethality Percentage:</span> <%= weapon.lethality_percentage %>%
+      </p>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Kill Radius:</span> <%= weapon.kill_radius %> meters
+      </p>
+
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Ammo:</span> <%= weapon.ammo %> rounds
+      </p>
+
+      <div class="flex justify-between space-x-2">
+        <!-- Buttons for Edit, and Delete -->
+        <%= link_to "Edit", edit_weapon_path(weapon), class: "bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600" %>
+        <%= button_to "Delete", weapon, method: :delete, data: { confirm: "Are you sure?" }, class: "bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Back to Dashboard or Missions -->
+<div class="mt-8">
+  <%= link_to "Back to mission dashboard", root_path, class: "text-blue-500 hover:underline" %>
+</div>

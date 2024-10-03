@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_02_214340) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_03_083217) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -130,6 +130,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_214340) do
     t.text "effect"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
+    t.integer "skill_percentage"
+    t.integer "base_range"
+    t.string "damage"
+    t.integer "armor_piercing"
+    t.integer "lethality_percentage"
+    t.integer "kill_radius"
+    t.integer "ammo"
   end
 
   create_table "mission_sounds", force: :cascade do |t|

@@ -1,0 +1,14 @@
+<h1 class="text-3xl font-bold mb-6">Weapon: <%= @weapon.name %></h1>
+
+<div class="bg-white shadow-md rounded-lg p-6">
+  <p><strong>Skill Percentage:</strong> <%= @weapon.skill_percentage %></p>
+  <p><strong>Base Range:</strong> <%= @weapon.base_range %> meters</p>
+  <p><strong>Damage:</strong> <%= @weapon.damage %></p>
+  <p><strong>Armor Piercing:</strong> <%= @weapon.armor_piercing %></p>
+  <p><strong>Lethality Percentage:</strong> <%= @weapon.lethality_percentage %>%</p>
+  <p><strong>Kill Radius:</strong> <%= @weapon.kill_radius %> meters</p>
+  <p><strong>Ammo:</strong> <%= @weapon.ammo %> rounds</p>
+</div>
+
+<%= link_to 'Back to Weapons', weapons_path, class: 'text-blue-500 hover:underline mt-4 inline-block' %>
+<%= link_to 'Edit', edit_weapon_path(@weapon), class: 'text-blue-500 hover:underline ml-4 inline-block' %>
