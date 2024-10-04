@@ -3,7 +3,7 @@
   <details class="group">
     <!-- Summary header (always visible) -->
     <summary class="cursor-pointer flex justify-between items-center">
-      <h3 class="text-lg font-bold flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+      <h3 class="text-lg font-bold flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg transform hover:scale-110">
         <!-- Character Name -->
         <span class="text-xl">
           <%= character_sheet.name %>
@@ -16,6 +16,23 @@
           </span>
         <% end %>
       </h3>
+
+      <!-- Condition Tags with Improved Size and Hover Tooltip -->
+      <div class="flex space-x-3 ml-4">
+        <% character_sheet.conditions.each do |condition| %>
+          <% condition_class = case condition.condition_type
+            when 'mental_disorder' then 'bg-black text-white'
+            when 'wound' then 'bg-red-500 text-white'
+            when 'ailment' then 'bg-yellow-500 text-black'
+            else 'bg-gray-500 text-white'
+          end %>
+
+          <span class="rounded-full px-4 py-2 text-sm font-semibold <%= condition_class %> cursor-pointer transition duration-200"
+                title="Severity: <%= condition.severity %> | Description: <%= condition.description %>">
+            <%= condition.name %>
+          </span>
+        <% end %>
+      </div>
 
       <!-- Remove Button for Game Masters only -->
       <% if mission && current_user == mission.game_master %>

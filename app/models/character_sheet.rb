@@ -8,6 +8,9 @@ class CharacterSheet < ApplicationRecord
   has_many :character_skills, dependent: :destroy
   has_many :skills, through: :character_skills
 
+  has_many :character_sheets_conditions
+  has_many :conditions, through: :character_sheets_conditions
+
   has_many :bounds, dependent: :destroy
   accepts_nested_attributes_for :bounds, allow_destroy: true
 

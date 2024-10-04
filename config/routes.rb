@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     delete "remove_character_sheet/:character_sheet_id", to: "missions#remove_character_sheet", as: "remove_character_sheet_from"
   end
 
+  resources :conditions, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :weapons, only: [ :index, :new, :create, :edit, :update, :destroy, :show  ]
   resources :sounds, only: [ :index, :new, :create, :edit, :update, :destroy, :show ]
   resources :skills, only: [ :index, :new, :create, :edit, :update, :destroy ]
