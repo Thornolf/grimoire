@@ -1,7 +1,9 @@
-<h1 class="text-3xl font-bold mb-8">Your Notes</h1>
+<div id="note-form">
+  <%= render 'notes/form', note: @note, mission: @mission %>
+</div>
 
-<%= render 'form' %>
-
-<div id="notes-list">
-  <%= render partial: 'note', collection: @notes, as: :note %>
+<div class="note bg-white shadow-lg rounded-lg p-6 border mb-4">
+  <div class="note-content">
+    <%= @note.content %>
+  </div>
 </div>

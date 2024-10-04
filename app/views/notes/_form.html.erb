@@ -1,7 +1,5 @@
-<%= form_with(model: [@mission, Note.new], local: false, data: { controller: "autosave", action: "turbo:submit-end->autosave#reset" }) do |form| %>
+<%= form_with(model: [mission, note], local: false, data: { controller: "autosave", action: "turbo:submit-end->autosave#reset" }) do |form| %>
   <div class="mb-6">
-    <%= form.rich_text_area :content, class: "border-gray-300 rounded w-full p-2", placeholder: "Write your note here..." %>
+    <%= form.rich_text_area :content, value: note.content, class: "border-gray-300 rounded w-full p-2", placeholder: "Write your note here..." %>
   </div>
-
-  <%= form.submit "Add Note", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
 <% end %>

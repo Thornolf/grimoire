@@ -1,6 +1,7 @@
 class NotesController < ApplicationController
   before_action :set_mission
   before_action :set_user
+  before_action :set_note
 
   # GET /missions/:mission_id/notes
   def index
@@ -22,9 +23,26 @@ class NotesController < ApplicationController
     end
   end
 
-  def update; end
+  def edit
+    @note = current_user.notes.find_or_initialize_by(mission: @mission)
+  end
+
+  def update
+    if @note.update(note_params)
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.update("note-form", partial: "notes/form", locals: { note: @note, mission: @mission }) }
+        format.html { redirect_to mission_path(@mission), notice: "Note saved." }
+      end
+    else
+      render :edit
+    end
+  end
 
   private
+
+  def set_note
+    @note = current_user.notes.find_or_initialize_by(mission: @mission)
+  end
 
   def set_mission
     @mission = Mission.find(params[:mission_id])
