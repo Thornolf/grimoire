@@ -16,7 +16,6 @@
   <!-- Add Character Sheet Form -->
   <div class="bg-white shadow-md rounded-lg p-6 mt-4 mb-4">
     <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true do |form| %>
-      <%= form.label :character_sheet_id, "Select Character Sheet", class: "block font-semibold mb-2" %>
       <%= form.collection_select :character_sheet_id, CharacterSheet.where.not(id: @mission.character_sheets.pluck(:id)), :id, :name, prompt: "Choose a Character Sheet", class: "border border-gray-300 rounded w-full p-2" %>
 
       <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700 mt-4' do %>

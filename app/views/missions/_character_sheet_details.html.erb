@@ -120,7 +120,7 @@
         </summary>
         <%= render "inventories/inventory", character_sheet: character_sheet %>
 
-        <% if mission %>
+        <% if mission && current_user.game_master?%>
           <div class="mb-4">
             <%= form_with url: mission_character_sheet_add_inventory_item_to_path(mission, character_sheet.id), method: :post, local: true do |form| %>
               <%= form.collection_select :item_id, Item.all, :id, :name, prompt: "Choose an item", class: "border border-gray-300 rounded w-full p-2" %>
