@@ -29,7 +29,10 @@ Rails.application.routes.draw do
   resources :sounds, only: [ :index, :new, :create, :edit, :update, :destroy, :show ]
   resources :skills, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :items, only: [ :index, :new, :create, :edit, :update, :destroy ]
-  resources :character_sheets, only: [ :index, :new, :create, :edit, :update, :show ] do
-      resources :inventories, only: [ :new, :create, :edit, :update, :destroy, :show ]
+
+  resources :character_sheets do
+    resources :inventories, only: [ :new, :create, :edit, :update, :destroy, :show ]
+
+    post "add_condition", to: "character_sheets#add_condition", as: "add_condition_to"
   end
 end

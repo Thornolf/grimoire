@@ -13,6 +13,7 @@ import AudioPlayerController from "./controllers/audio_player_controller"
 import BoundsController from "./controllers/bounds_controller"
 import DropdownController from "./controllers/dropdown_controller"
 import NewItemController from "./controllers/new_item_controller"
+import NewConditionController from "./controllers/new_condition_controller"
 
 const application = Application.start()
 
@@ -21,9 +22,7 @@ application.register("audio-player", AudioPlayerController)
 application.register("bounds", BoundsController)
 application.register("dropdown", DropdownController)
 application.register("new-item", NewItemController)
-
-// FIXME: NOT SUPPOSED TO BE IN PROD JUST FOR DEBUGGING DO NOT COMMIT
-window.application = application
+application.register("new-condition", NewConditionController)
 
 //document.addEventListener('turbo:before-stream-render', (event) => {
 //  console.log("Turbo Stream received:", event.detail);
