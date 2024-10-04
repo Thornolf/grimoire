@@ -10,4 +10,6 @@ class User < ApplicationRecord
   has_many :missions, through: :missions_users
 
   has_many :character_sheets
+
+  has_many :notes, dependent: :destroy
 end

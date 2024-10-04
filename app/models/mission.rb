@@ -10,4 +10,6 @@ class Mission < ApplicationRecord
 
   has_many :mission_sounds
   has_many :sounds, through: :mission_sounds
+
+  has_many :notes, dependent: :destroy
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_04_105439) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_04_202534) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -187,6 +187,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_105439) do
     t.index ["user_id"], name: "index_missions_users_on_user_id"
   end
 
+  create_table "notes", force: :cascade do |t|
+    t.text "content"
+    t.integer "user_id", null: false
+    t.integer "mission_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mission_id"], name: "index_notes_on_mission_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "name"
     t.integer "base_percentage"
@@ -232,4 +242,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_105439) do
   add_foreign_key "mission_sounds", "sounds"
   add_foreign_key "missions_users", "missions"
   add_foreign_key "missions_users", "users"
+  add_foreign_key "notes", "missions"
+  add_foreign_key "notes", "users"
 end

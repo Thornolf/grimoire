@@ -14,6 +14,7 @@ import BoundsController from "./controllers/bounds_controller"
 import DropdownController from "./controllers/dropdown_controller"
 import NewItemController from "./controllers/new_item_controller"
 import NewConditionController from "./controllers/new_condition_controller"
+import AutosaveController from "./controllers/autosave_controller"
 
 const application = Application.start()
 
@@ -23,6 +24,7 @@ application.register("bounds", BoundsController)
 application.register("dropdown", DropdownController)
 application.register("new-item", NewItemController)
 application.register("new-condition", NewConditionController)
+application.register("autosave", AutosaveController)
 
 //document.addEventListener('turbo:before-stream-render', (event) => {
 //  console.log("Turbo Stream received:", event.detail);

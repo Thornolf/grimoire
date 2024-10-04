@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :missions do
+    resources :notes, only: [ :index, :create, :update ]
     resources :handouts
     resources :character_sheets do
       delete "remove_inventory_item/:inventory_id", to: "missions#remove_inventory_item", as: "remove_inventory_item_from"
@@ -29,7 +30,6 @@ Rails.application.routes.draw do
   resources :sounds, only: [ :index, :new, :create, :edit, :update, :destroy, :show ]
   resources :skills, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :items, only: [ :index, :new, :create, :edit, :update, :destroy ]
-
   resources :character_sheets do
     resources :inventories, only: [ :new, :create, :edit, :update, :destroy, :show ]
 
