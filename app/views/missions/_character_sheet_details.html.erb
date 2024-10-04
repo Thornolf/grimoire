@@ -241,7 +241,7 @@
         <summary class="cursor-pointer text-lg font-semibold flex justify-between items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
           Inventory (Click to expand/collapse)
         </summary>
-        <%= render "inventories/inventory", character_sheet: character_sheet %>
+        <%= render "inventories/inventory", character_sheet: character_sheet, mission: mission %>
 
         <% if mission && current_user.game_master? %>
           <div class="mb-4">
