@@ -1,6 +1,6 @@
 class CharacterSheetsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_character_sheet, only: [ :show, :edit, :update, :destroy, :add_condition ]
+  before_action :set_character_sheet, only: [ :show, :edit, :update, :destroy, :add_condition, :remove_condition ]
   before_action :set_mission, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
   before_action :authorize_user!, only: [ :edit, :update, :destroy ]
 
@@ -105,11 +105,28 @@ class CharacterSheetsController < ApplicationController
     end
   end
 
+  def remove_condition
+    condition = Condition.find(params[:condition_id])
+
+    if @character_sheet.conditions.delete(condition) # This removes the association, not the actual record
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @character_sheet.mission })
+        end
+        format.html { redirect_to mission_character_sheet_path(@character_sheet.mission, @character_sheet), notice: "Condition removed successfully." }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to mission_character_sheet_path(@character_sheet.mission, @character_sheet), alert: "Failed to remove condition." }
+      end
+    end
+  end
+
   private
 
   # Set the character sheet depending on whether it's mission-based or standalone
   def set_character_sheet
-    character_sheet_id = params[:id] || params[:character_sheet_id]
+    character_sheet_id = params[:id]
 
     if @mission
       @character_sheet = @mission.character_sheets.find(character_sheet_id)

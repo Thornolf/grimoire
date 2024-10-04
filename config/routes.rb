@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   resources :character_sheets do
     resources :inventories, only: [ :new, :create, :edit, :update, :destroy, :show ]
 
-    post "add_condition", to: "character_sheets#add_condition", as: "add_condition_to"
+    member do
+      post "add_condition", to: "character_sheets#add_condition", as: "add_condition_to"
+      delete "remove_condition/:condition_id", to: "character_sheets#remove_condition", as: "remove_condition_from"
+    end
   end
 end

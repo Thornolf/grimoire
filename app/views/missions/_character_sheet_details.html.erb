@@ -20,56 +20,63 @@
           <% end %>
       </h3>
 
-      <!-- Condition Tags with "+" for adding a new condition -->
+      <!-- Condition Tags with "+" for adding a new condition and "X" for removing a condition -->
       <div class="flex space-x-3 ml-4">
         <% character_sheet.conditions.each do |condition| %>
-          <% condition_class=case condition.condition_type when 'mental_disorder' then 'bg-black text-white'
-            when 'wound' then 'bg-red-500 text-white' when 'ailment' then 'bg-yellow-500 text-black'
-            else 'bg-gray-500 text-white' end %>
+          <% condition_class = case condition.condition_type
+            when 'mental_disorder' then 'bg-black text-white'
+            when 'wound' then 'bg-red-500 text-white'
+            when 'ailment' then 'bg-yellow-500 text-black'
+            else 'bg-gray-500 text-white'
+          end %>
 
-            <span
-              class="rounded-full px-4 py-2 text-sm font-semibold <%= condition_class %> cursor-pointer transition duration-200"
-              title="Severity: <%= condition.severity %> | Description: <%= condition.description %>">
+          <div class="relative inline-block">
+            <!-- Condition Tag -->
+            <span class="rounded-full px-4 py-2 text-sm font-semibold <%= condition_class %> cursor-pointer transition duration-200"
+                  title="Severity: <%= condition.severity %> | Description: <%= condition.description %>">
               <%= condition.name %>
             </span>
+
+            <!-- X button to remove the condition (Game Master only) -->
+            <% if current_user == mission.game_master %>
+              <%= button_to remove_condition_from_character_sheet_path(character_sheet, condition),
+                    method: :delete,
+                    class: 'absolute top-0 right-0 bg-red-600 text-white px-1 py-0.5 rounded-full text-xs hover:bg-red-800' do %>
+                &times;
+              <% end %>
             <% end %>
+          </div>
+        <% end %>
 
-              <!-- "+" tag to add new condition (Only for Game Masters) -->
-              <% if current_user==mission.game_master %>
-                <div class="relative" data-controller="new-condition">
-                  <span
-                    class="rounded-full bg-green-500 text-white px-3 py-1 text-sm font-semibold cursor-pointer hover:bg-green-700"
-                    data-action="click->new-condition#toggleDropdown">+</span>
+        <!-- "+" tag to add new condition (Only for Game Masters) -->
+        <% if current_user == mission.game_master %>
+          <div class="relative" data-controller="new-condition">
+            <span class="rounded-full bg-green-500 text-white px-3 py-1 text-sm font-semibold cursor-pointer hover:bg-green-700"
+                  data-action="click->new-condition#toggleDropdown">+</span>
 
-                  <!-- Dropdown Form for adding new condition -->
-                  <div id="condition-dropdown" class="absolute mt-2 hidden z-10 w-64 bg-white shadow-lg rounded-lg p-4"
-                    data-new-condition-target="dropdown">
-                    <%= form_with url: character_sheet_add_condition_to_path(character_sheet), method: :post, local:
-                      true do |form| %>
-                      <div class="mb-4">
-                        <%= form.label :condition_id, "Add Condition" , class: "block font-semibold mb-2" %>
-                          <%= form.collection_select :condition_id, Condition.where.not(id:
-                            character_sheet.conditions.pluck(:id)), :id, :name, { prompt: "Select a condition" },
-                            class: "w-full p-2 border border-gray-300 rounded" %>
-                      </div>
-
-                      <div class="flex justify-between">
-                        <%= button_tag "Add" , type: 'submit' ,
-                          class: "bg-green-500 px-4 py-2 rounded-lg text-white hover:bg-green-700" %>
-                          <button type="button" class="bg-red-500 px-4 py-2 rounded-lg text-white"
-                            data-action="click->new-condition#toggleDropdown">Cancel</button>
-                      </div>
-                      <% end %>
-                  </div>
+            <!-- Dropdown Form for adding new condition -->
+            <div id="condition-dropdown" class="absolute mt-2 hidden z-10 w-64 bg-white shadow-lg rounded-lg p-4"
+                data-new-condition-target="dropdown">
+              <%= form_with url: add_condition_to_character_sheet_path(character_sheet), method: :post, local: true do |form| %>
+                <div class="mb-4">
+                  <%= form.label :condition_id, "Add Condition", class: "block font-semibold mb-2" %>
+                  <%= form.collection_select :condition_id, Condition.where.not(id: character_sheet.conditions.pluck(:id)), :id, :name, { prompt: "Select a condition" }, class: "w-full p-2 border border-gray-300 rounded" %>
                 </div>
-                <% end %>
+
+                <div class="flex justify-between">
+                  <%= button_tag "Add", type: 'submit', class: "bg-green-500 px-4 py-2 rounded-lg text-white hover:bg-green-700" %>
+                  <button type="button" class="bg-red-500 px-4 py-2 rounded-lg text-white" data-action="click->new-condition#toggleDropdown">Cancel</button>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
       </div>
 
       <!-- Remove Button for Game Masters only -->
       <% if mission && current_user==mission.game_master %>
-        <%= button_to 'Remove' , mission_remove_character_sheet_from_path(mission, character_sheet), method: :delete,
-          class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
-          <% end %>
+        <%= button_to 'Remove' , mission_remove_character_sheet_from_path(mission, character_sheet), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+      <% end %>
     </summary>
 
     <div class="mt-4">
