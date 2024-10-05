@@ -33,7 +33,6 @@ class CharacterSheetsController < ApplicationController
     @skills = Skill.where(default: true)
   end
 
-  # Create action for both standalone and mission-based character sheets
   def create
     kind = current_user.game_master? ? "npc" : "player"
     modified_character_sheet_params = character_sheet_params.merge!(kind: kind)
@@ -98,6 +97,7 @@ class CharacterSheetsController < ApplicationController
 
   def add_condition
     condition = Condition.find(params[:condition_id])
+    @mission = @character_sheet.mission
 
     if condition
       @character_sheet.conditions << condition
@@ -115,6 +115,7 @@ class CharacterSheetsController < ApplicationController
 
   def remove_condition
     condition = Condition.find(params[:condition_id])
+    @mission = @character_sheet.mission
 
     if @character_sheet.conditions.delete(condition) # This removes the association, not the actual record
       respond_to do |format|

@@ -4,10 +4,19 @@
   <!-- Collapsible Character Sheets Section -->
   <details class="group">
     <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
-      Character Sheets
+      Players Character Sheets
     </summary>
     <div class="mt-4">
-      <%= render 'character_sheet_list', character_sheets: @character_sheets %>
+      <%= render 'character_sheet_list', character_sheets: @character_sheets.where(kind: "player") %>
+    </div>
+  </details>
+  </br>
+  <details class="group">
+    <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-yellow-400 to-yellow-600 text-white py-2 px-4 rounded-lg shadow-lg">
+      NPC Character Sheets
+    </summary>
+    <div class="mt-4">
+      <%= render 'character_sheet_list', character_sheets: @character_sheets.where(kind: "npc") %>
     </div>
   </details>
 
