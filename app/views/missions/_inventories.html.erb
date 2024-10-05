@@ -1,0 +1,32 @@
+<!-- app/views/missions/_inventories.html.erb -->
+
+<details class="group mt-4">
+  <summary class="cursor-pointer text-lg font-semibold flex justify-between items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+    Inventory (Click to expand/collapse)
+  </summary>
+
+  <div id="inventories" class="mt-4">
+    <ul>
+      <% character_sheet.inventories.each do |inventory| %>
+        <div id="inventory_<%= inventory.id %>">
+          <li>
+            <strong><%= inventory.item.name %></strong> - Location: <%= inventory.location.humanize %>
+            <%= button_to 'Remove', mission_character_sheet_remove_inventory_item_from_path(mission, character_sheet, inventory), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
+          </li>
+        </div>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- Form to Add New Item (Game Master Only) -->
+  <% if mission && current_user.game_master? %>
+    <div class="mt-4">
+      <%= form_with url: mission_character_sheet_add_inventory_item_to_path(mission, character_sheet.id), method: :post, local: true do |form| %>
+        <%= form.collection_select :item_id, Item.all, :id, :name, prompt: "Choose an item", class: "border border-gray-300 rounded w-full p-2" %>
+        <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700' do %>
+          Add item to inventory
+        <% end %> <!-- Missing end block for button_tag -->
+      <% end %> <!-- Missing end block for form_with -->
+    </div>
+  <% end %>
+</details>

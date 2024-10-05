@@ -1,0 +1,12 @@
+<details class="group mt-4">
+  <summary class="cursor-pointer text-lg font-semibold flex justify-between items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+    Skills (Click to expand/collapse)
+  </summary>
+  <div class="grid grid-cols-2 gap-4 mt-4 p-4 bg-gray-50 rounded-lg shadow-inner">
+    <% character_sheet.character_skills.each do |character_skill| %>
+      <div>
+        <p><strong><%= character_skill.skill.name %>:</strong> <%= character_skill.custom_percentage %> %</p>
+      </div>
+    <% end %>
+  </div>
+</details>
