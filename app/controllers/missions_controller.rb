@@ -103,7 +103,10 @@ end
 
     if @mission && @character_sheet
       @mission.character_sheets.delete(@character_sheet)
-      MissionsUser.find_by(user: @character_sheet.user, mission: @mission, role: @character_sheet.user.role).destroy
+
+      if @character_sheet.kind == "player"
+        MissionsUser.find_by(user: @character_sheet.user, mission: @mission, role: @character_sheet.user.role).destroy
+      end
 
       flash[:success] = "CharacterSheet successfully removed from the mission."
     else

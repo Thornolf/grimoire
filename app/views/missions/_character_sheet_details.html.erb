@@ -2,7 +2,7 @@
   <details class="group">
     <summary class="cursor-pointer flex justify-between items-center">
       <!-- Header (Character Name and Conditions) -->
-      <%= render partial: "missions/character_sheet_header", locals: { character_sheet: character_sheet, mission: mission } %>
+      <%= render partial: "missions/character_sheet_header", locals: { character_sheet: character_sheet, mission: @mission } %>
     </summary>
 
     <div class="mt-4">
@@ -22,7 +22,7 @@
       <%= render partial: "missions/skills", locals: { character_sheet: character_sheet } %>
 
       <!-- Inventories Section -->
-      <%= render partial: "missions/inventories", locals: { character_sheet: character_sheet, mission: mission } %>
+      <%= render partial: "missions/inventories", locals: { character_sheet: character_sheet, mission: @mission } %>
     </div>
   </details>
 </li>

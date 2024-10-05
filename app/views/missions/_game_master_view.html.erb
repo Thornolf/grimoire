@@ -13,19 +13,20 @@
 
   <br>
 
-  <!-- Add Character Sheet Form -->
-  <div class="bg-white shadow-md rounded-lg p-6 mt-4 mb-4">
-    <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true do |form| %>
-      <%= form.collection_select :character_sheet_id, CharacterSheet.where.not(id: @mission.character_sheets.pluck(:id)), :id, :name, prompt: "Choose a Character Sheet", class: "border border-gray-300 rounded w-full p-2" %>
+  <!-- Add/Create Character Sheet Form -->
+  <div class="bg-white shadow-md rounded-lg p-6 mt-4 mb-4 flex items-center space-x-4">
+    <!-- Character Sheet Selection Form -->
+    <%= form_with url: mission_add_character_sheet_to_path(@mission), method: :post, local: true, class: "flex items-center" do |form| %>
+      <%= form.collection_select :character_sheet_id, CharacterSheet.where.not(id: @mission.character_sheets.pluck(:id)), :id, :name, prompt: "Choose a Character Sheet", class: "border border-gray-300 rounded p-2 mr-4" %>
 
-      <%= button_tag type: 'submit', class: 'bg-green-500 px-4 py-2 rounded hover:bg-green-700 mt-4' do %>
+      <%= button_tag type: 'submit', class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700' do %>
         Add Character Sheet to Mission
       <% end %>
     <% end %>
-  </div>
 
-  <%= link_to 'Create New Character Sheet', new_mission_character_sheet_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block hover:bg-blue-700' %>
-</div>
+    <!-- Create New Character Sheet Button -->
+    <%= link_to 'Create New Character Sheet', new_mission_character_sheet_path(@mission), class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+  </div>
 
 <!-- Handouts Section -->
 <h2 class="text-3xl font-bold text-blue-600 mb-6 border-b-2 pb-2 border-gray-200">Handouts</h2>

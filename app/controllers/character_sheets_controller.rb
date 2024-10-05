@@ -35,20 +35,28 @@ class CharacterSheetsController < ApplicationController
 
   # Create action for both standalone and mission-based character sheets
   def create
+    kind = current_user.game_master? ? "npc" : "player"
+    modified_character_sheet_params = character_sheet_params.merge!(kind: kind)
+
     if @mission
-      @character_sheet = @mission.character_sheets.build(character_sheet_params)
+      @character_sheet = @mission.character_sheets.build(modified_character_sheet_params.except(:skills))
     else
-      @character_sheet = CharacterSheet.new(character_sheet_params)
+      @character_sheet = CharacterSheet.new(modified_character_sheet_params.except(:skills))
     end
-    @character_sheet.user = current_user
+
+    @character_sheet.user = current_user if current_user.player?
 
     if @character_sheet.save
       save_character_skills(@character_sheet)
 
-      if @mission
-        redirect_to mission_path(@mission), notice: "Character Sheet successfully created."
-      else
-        redirect_to character_sheets_path, notice: "Character Sheet successfully created."
+      respond_to do |format|
+        format.html do
+          redirect_to mission_path(@mission), notice: "Character Sheet successfully created."
+        end
+
+        format.turbo_stream do
+          redirect_to mission_path(@mission), notice: "Character Sheet successfully created."
+        end
       end
     else
       @skills = Skill.where(default: true)
@@ -63,7 +71,7 @@ class CharacterSheetsController < ApplicationController
 
   # Update action for both standalone and mission-based character sheets
   def update
-    if @character_sheet.update(character_sheet_params)
+    if @character_sheet.update(character_sheet_params.except(:skills))
       # Save skills from form input
       save_character_skills(@character_sheet)
 
@@ -142,29 +150,12 @@ class CharacterSheetsController < ApplicationController
 
   def character_sheet_params
     params.require(:character_sheet).permit(
-      :name,
-      :mission_id,
-      :strength,
-      :constitution,
-      :dexterity,
-      :intelligence,
-      :power,
-      :charisma,
-      :hit_points,
-      :willpower_points,
-      :sanity,
-      :breaking_point,
-      :luck,
-      :employer,
-      :gender,
-      :age,
-      :nationality,
-      :motivation,
-      :profession,
-      :rank,
-      :background,
-      :occupation_history,
-      bounds_attributes: [ :id, :name, :description, :score, :_destroy ]
+      :name, :background, :employer, :age, :gender, :nationality, :motivation,
+      :profession, :rank, :occupation_history, :strength, :dexterity,
+      :intelligence, :power, :charisma, :constitution, :sanity,
+      :willpower_points, :breaking_point, :luck,
+      bounds_attributes: [ :id, :name, :description, :score, :_destroy ],
+      skills: {}
     )
   end
 
@@ -179,12 +170,14 @@ class CharacterSheetsController < ApplicationController
   end
 
   def save_character_skills(character_sheet)
-    params["character_sheet"]["skills"].each do |skill_id, custom_percentage|
-      character_sheet_skill = CharacterSkill.find_or_initialize_by(
-        character_sheet: character_sheet,
-        skill_id: skill_id
-      )
-      character_sheet_skill.update(custom_percentage: custom_percentage)
+    if params[:character_sheet][:skills].present?
+      params[:character_sheet][:skills].each do |skill_id, custom_percentage|
+        character_sheet_skill = CharacterSkill.find_or_initialize_by(
+          character_sheet: character_sheet,
+          skill_id: skill_id
+        )
+        character_sheet_skill.update(custom_percentage: custom_percentage)
+      end
     end
   end
 end

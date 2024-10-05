@@ -1,5 +1,5 @@
 class CharacterSheet < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :mission, optional: true
 
   has_many :inventories, dependent: :destroy
@@ -8,7 +8,7 @@ class CharacterSheet < ApplicationRecord
   has_many :character_skills, dependent: :destroy
   has_many :skills, through: :character_skills
 
-  has_many :character_sheets_conditions
+  has_many :character_sheets_conditions, dependent: :destroy
   has_many :conditions, through: :character_sheets_conditions
 
   has_many :bounds, dependent: :destroy
@@ -22,6 +22,7 @@ class CharacterSheet < ApplicationRecord
   validate :primary_stats_total_points
 
   enum :kind, %i[player npc]
+
   private
 
   def primary_stats_total_points
