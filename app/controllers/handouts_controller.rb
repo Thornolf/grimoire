@@ -55,7 +55,7 @@ class HandoutsController < ApplicationController
   end
 
   def authorize_game_master!
-    unless current_user.game_master? && current_user == @mission.user
+    unless current_user.game_master? && current_user == @mission.game_master
       redirect_to mission_handouts_path(@mission), alert: "You are not authorized to perform this action."
     end
   end

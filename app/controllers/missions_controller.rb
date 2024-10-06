@@ -56,7 +56,10 @@ end
 
     if @character_sheet && @mission
       @mission.character_sheets << @character_sheet
-      MissionsUser.create!(user: @character_sheet.user, mission: @mission, role: @character_sheet.user.role)
+
+      if current_user.player?
+        MissionsUser.create!(user: @character_sheet.user, mission: @mission, role: @character_sheet.user.role)
+      end
 
       flash[:success] = "Character sheet successfully added to mission."
     else
