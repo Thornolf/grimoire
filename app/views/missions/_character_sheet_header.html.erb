@@ -12,35 +12,37 @@
 
 <!-- Condition Tags with "+" for adding a new condition and "X" for removing a condition -->
 <div class="flex space-x-3 ml-4">
-  <% character_sheet.conditions.each do |condition| %>
-    <% condition_class = case condition.condition_type
-      when 'mental_disorder' then 'bg-black text-white'
-      when 'wound' then 'bg-red-500 text-white'
-      when 'ailment' then 'bg-yellow-500 text-black'
-      else 'bg-gray-500 text-white'
-    end %>
+  <div id="character_sheets_conditions">
+    <% character_sheet.conditions.each do |condition| %>
+      <% condition_class = case condition.condition_type
+        when 'mental_disorder' then 'bg-black text-white'
+        when 'wound' then 'bg-red-500 text-white'
+        when 'ailment' then 'bg-yellow-500 text-black'
+        else 'bg-gray-500 text-white'
+      end %>
 
-    <div class="relative inline-block">
-      <!-- Condition Tag -->
-      <span class="rounded-full px-4 py-2 text-sm font-semibold <%= condition_class %> cursor-pointer transition duration-200"
-            title="Severity: <%= condition.severity %> | Description: <%= condition.description %>">
-        <%= condition.name %>
-      </span>
+      <div class="relative inline-block">
+        <!-- Condition Tag -->
+        <span class="rounded-full px-4 py-2 text-sm font-semibold <%= condition_class %> cursor-pointer transition duration-200"
+              title="Severity: <%= condition.severity %> | Description: <%= condition.description %>">
+          <%= condition.name %>
+        </span>
 
-      <!-- X button to remove the condition (Game Master only) -->
-      <% if current_user == mission.game_master %>
-        <%= button_to remove_condition_from_character_sheet_path(character_sheet, condition),
-              method: :delete,
-              class: 'absolute top-0 right-0 bg-red-600 text-white px-1 py-0.5 rounded-full text-xs hover:bg-red-800',
-              data: { turbo_confirm: "Are you sure?" } do %>
-          &times;
+        <!-- X button to remove the condition (Game Master only) -->
+        <% if user == mission.game_master %>
+          <%= button_to remove_condition_from_character_sheet_path(character_sheet, condition),
+                method: :delete,
+                class: 'absolute top-0 right-0 bg-red-600 text-white px-1 py-0.5 rounded-full text-xs hover:bg-red-800',
+                data: { turbo_confirm: "Are you sure?" } do %>
+            &times;
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-  <% end %>
+      </div>
+    <% end %>
+  </div>
 
   <!-- "+" tag to add new condition (Only for Game Masters) -->
-  <% if current_user == mission.game_master %>
+  <% if user == mission.game_master %>
     <div class="relative" data-controller="new-condition">
       <span class="rounded-full bg-green-500 text-white px-3 py-1 text-sm font-semibold cursor-pointer hover:bg-green-700"
             data-action="click->new-condition#toggleDropdown">+</span>
@@ -65,6 +67,6 @@
 </div>
 
 <!-- Remove Button for Game Masters only -->
-<% if mission && current_user == mission.game_master %>
+<% if mission && user == mission.game_master %>
   <%= button_to 'Remove', mission_remove_character_sheet_from_path(mission, character_sheet), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
 <% end %>

@@ -101,13 +101,21 @@ class CharacterSheetsController < ApplicationController
 
     if condition
       @character_sheet.conditions << condition
+
+      Turbo::StreamsChannel.broadcast_replace_to(
+        @mission,
+        target: "character_sheets_conditions",
+        partial: "missions/conditions",
+        locals: { character_sheet: @character_sheet, mission: @character_sheet.mission, user: current_user },
+        formats: [ :turbo_stream ]
+      )
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @character_sheet.mission }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @character_sheet.mission, user: current_user }) }
         format.html { redirect_to mission_character_sheet_path(@character_sheet.mission, @character_sheet), notice: "Condition added successfully." }
       end
     else
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @character_sheet.mission }), alert: "Invalid condition." }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @character_sheet.mission, user: current_user }), alert: "Invalid condition." }
         format.html { redirect_to mission_character_sheet_path(@character_sheet.mission, @character_sheet), alert: "Invalid condition." }
       end
     end
@@ -118,6 +126,14 @@ class CharacterSheetsController < ApplicationController
     @mission = @character_sheet.mission
 
     if @character_sheet.conditions.delete(condition) # This removes the association, not the actual record
+
+      Turbo::StreamsChannel.broadcast_replace_to(
+        @mission,
+        target: "character_sheets_conditions",
+        partial: "missions/conditions",
+        locals: { character_sheet: @character_sheet, mission: @character_sheet.mission, user: current_user },
+        formats: [ :turbo_stream ]
+      )
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @character_sheet.mission })

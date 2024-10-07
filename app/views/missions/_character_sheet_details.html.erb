@@ -1,27 +1,15 @@
 <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200" id="character-sheet-<%= character_sheet.id %>">
   <details class="group">
     <summary class="cursor-pointer flex justify-between items-center">
-      <!-- Header (Character Name and Conditions) -->
-      <%= render partial: "missions/character_sheet_header", locals: { character_sheet: character_sheet, mission: @mission } %>
+      <%= render partial: "missions/character_sheet_header", locals: { character_sheet: character_sheet, mission: @mission, user: current_user } %>
     </summary>
-
     <div class="mt-4">
       <!-- Basic Information Section -->
       <%= render partial: "missions/basic_information", locals: { character_sheet: character_sheet } %>
-
-      <!-- Primary Stats Section -->
       <%= render partial: "missions/primary_stats", locals: { character_sheet: character_sheet } %>
-
-      <!-- Secondary Stats Section -->
       <%= render partial: "missions/secondary_stats", locals: { character_sheet: character_sheet } %>
-
-      <!-- Bounds Section -->
       <%= render partial: "missions/bounds", locals: { character_sheet: character_sheet } %>
-
-      <!-- Skills Section -->
       <%= render partial: "missions/skills", locals: { character_sheet: character_sheet } %>
-
-      <!-- Inventories Section -->
       <%= render partial: "missions/inventories", locals: { character_sheet: character_sheet, mission: @mission } %>
     </div>
   </details>
