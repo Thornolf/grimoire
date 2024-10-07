@@ -6,12 +6,10 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log("AudioPlayerController connected")
     this.playAudio()
   }
 
   playAudio() {
-    console.log("playAudio() called with srcValue:", this.srcValue)
     const audio = new Audio(this.srcValue)
     audio.play().catch(error => {
       console.error("Failed to play audio:", error)

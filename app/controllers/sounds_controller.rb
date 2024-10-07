@@ -69,10 +69,6 @@ class SoundsController < ApplicationController
       formats: [ :turbo_stream ]
     )
 
-    puts "------------------------------------"
-    puts render_to_string(partial: "sounds/play", locals: { sound: @sound, mission: @mission })
-    puts "------------------------------------"
-
     respond_to do |format|
       format.turbo_stream
     end
