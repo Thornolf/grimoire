@@ -65,23 +65,19 @@ class CharacterSheetsController < ApplicationController
 
   # Edit action
   def edit
+    @character_sheet = CharacterSheet.find(params[:id])
+    @mission = Mission.find(params[:mission_id])
     @skills = Skill.where(default: true)
   end
 
   # Update action for both standalone and mission-based character sheets
   def update
     if @character_sheet.update(character_sheet_params.except(:skills))
-      # Save skills from form input
-      save_character_skills(@character_sheet)
-
       if @mission
         redirect_to [ @mission, @character_sheet ], notice: "Character sheet was successfully updated."
       else
         redirect_to @character_sheet, notice: "Character sheet was successfully updated."
       end
-    else
-      @skills = Skill.where(default: true) # Re-load skills if update fails
-      render :edit
     end
   end
 

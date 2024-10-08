@@ -42,7 +42,7 @@
   </div>
 
   <!-- "+" tag to add new condition (Only for Game Masters) -->
-  <% if user == mission.game_master %>
+  <% if mission && user == mission.game_master %>
     <div class="relative" data-controller="new-condition">
       <span class="rounded-full bg-green-500 text-white px-3 py-1 text-sm font-semibold cursor-pointer hover:bg-green-700"
             data-action="click->new-condition#toggleDropdown">+</span>

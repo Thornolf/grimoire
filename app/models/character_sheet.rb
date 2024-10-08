@@ -14,7 +14,7 @@ class CharacterSheet < ApplicationRecord
   has_many :bounds, dependent: :destroy
   accepts_nested_attributes_for :bounds, allow_destroy: true
 
-  before_save :calculate_secondary_stats
+  before_create :calculate_secondary_stats
 
   validates :strength, :constitution, :dexterity, :intelligence, :power, :charisma,
             presence: true,
