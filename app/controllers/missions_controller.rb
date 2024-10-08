@@ -147,7 +147,7 @@ end
     @inventory = Inventory.create(item_id: @item.id, character_sheet_id: @character_sheet.id)
 
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.append("inventories", partial: "inventories/inventory", locals: { character_sheet: @character_sheet }) }
+      format.turbo_stream { render turbo_stream: turbo_stream.append("items", partial: "missions/item", locals: { character_sheet: @character_sheet, mission: @mission, inventory: @inventory }) }
       format.html { redirect_to @mission }
     end
   end

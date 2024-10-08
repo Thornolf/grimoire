@@ -8,11 +8,8 @@
   <div id="inventories" class="mt-4">
     <ul>
       <% character_sheet.inventories.each do |inventory| %>
-        <div id="inventory_<%= inventory.id %>">
-          <li>
-            <strong><%= inventory.item.name %></strong> - Location: <%= inventory.location.humanize %>
-            <%= button_to 'Remove', mission_character_sheet_remove_inventory_item_from_path(mission, character_sheet, inventory), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700' %>
-          </li>
+        <div id="items">
+          <%= render partial: "missions/item", locals: { mission: mission, character_sheet: character_sheet, inventory: inventory } %>
         </div>
       <% end %>
     </ul>
