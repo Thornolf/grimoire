@@ -15,6 +15,7 @@ import DropdownController from "./controllers/dropdown_controller"
 import NewItemController from "./controllers/new_item_controller"
 import NewConditionController from "./controllers/new_condition_controller"
 import AutosaveController from "./controllers/autosave_controller"
+import InlineEditController from "./controllers/inline_edit_controller"
 
 const application = Application.start()
 
@@ -25,6 +26,7 @@ application.register("dropdown", DropdownController)
 application.register("new-item", NewItemController)
 application.register("new-condition", NewConditionController)
 application.register("autosave", AutosaveController)
+application.register("inline-edit", InlineEditController)
 
 //document.addEventListener('turbo:before-stream-render', (event) => {
 //  console.log("Turbo Stream received:", event.detail);

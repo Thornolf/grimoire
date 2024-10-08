@@ -1,0 +1,14 @@
+<turbo-frame id="sanity">
+  <div class="flex items-center">
+    <p><strong>Sanity (SAN):</strong></p>
+
+    <%= form_with(model: character_sheet, class: "contents", data: { controller: "inline-edit" }) do |form| %>
+      <%= form.text_field :sanity,
+        data: {
+          inline_edit_target: "input",
+          action: "blur->inline-edit#submitForm keydown.enter->inline-edit#submitForm:prevent keydown.esc->inline-edit#abort"
+        }
+      %>
+    <% end %>
+  </div>
+</turbo-frame>
