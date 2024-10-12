@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Grimoire</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -16,10 +15,6 @@
   <body class="bg-gray-100 text-gray-900">
     <nav class="bg-gray-800 p-4">
       <div class="container mx-auto flex justify-between items-center">
-        <div>
-          <%= link_to 'Grimoire', root_path, class: 'text-white font-bold text-xl' %>
-        </div>
-
         <div class="space-x-4">
           <%= link_to 'Missions', missions_path, class: 'text-gray-300 hover:text-white' %>
           <%= link_to 'Character Sheets', character_sheets_path, class: 'text-gray-300 hover:text-white' %>
@@ -62,7 +57,8 @@
       </div>
     </nav>
 
-    <div class="container mx-auto mt-6">
+    <!-- Main container with left padding to account for the sidebar -->
+    <div class="ml-64 mt-6"> <!-- 64 is equal to the width of the sidebar (w-60 + padding) -->
       <% if flash[:success] %>
         <div class="bg-green-500 text-white p-4 rounded mb-4">
           <%= flash[:success] %>
@@ -73,7 +69,10 @@
         </div>
       <% end %>
 
-      <%= yield %>
+      <%= yield %> <!-- This is where your main content will appear -->
     </div>
+
+    <!-- Sidebar on the left -->
+    <%= render 'shared/sidebar' %>
   </body>
 </html>

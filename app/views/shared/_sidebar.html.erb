@@ -1,0 +1,14 @@
+<aside class="w-60 bg-gray-800 text-white p-4 h-full fixed top-0 left-0">
+  <!-- Logo -->
+  <div class="mb-4">
+    <%= image_tag 'logo.svg', alt: 'Grimoire Logo', class: 'w-20 h-20 mx-auto' %>
+  </div>
+
+  <!-- Separator -->
+  <hr class="border-gray-600 mb-4">
+
+  <!-- Navigation Links -->
+  <ul class="space-y-2 text-center">
+    <li><%= link_to 'Sounds', sounds_path, class: 'hover:bg-gray-700 p-2 block rounded' %></li>
+  </ul>
+</aside>
