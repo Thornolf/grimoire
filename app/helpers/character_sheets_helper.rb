@@ -15,4 +15,10 @@ module CharacterSheetsHelper
     # Format the output to display "Stat Name: Value"
     top_stats.map { |stat_name, value| "#{stat_name.capitalize}: #{value}" }.join(", ")
   end
+
+  def humanize_stat_name(attribute)
+    if attribute == :sanity
+      "SANITY (SAN)"
+    end
+  end
 end

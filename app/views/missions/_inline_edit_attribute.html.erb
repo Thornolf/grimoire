@@ -1,0 +1,9 @@
+<turbo-frame id="<%= dom_id(character_sheet, attribute) %>">
+    <div class="flex items-center">
+      <p><strong><%=humanize_stat_name(attribute)%>:</strong> <%= character_sheet.send(attribute) %></p>
+
+      <%= link_to edit_mission_character_sheet_path(character_sheet.mission, character_sheet, locals: { attribute: attribute }), class: "text-blue-500 flex items-center" do %>
+        <%= icon "pencil", class: "w-4 h-4 inline-block mr-1" %>
+      <% end %>
+    </div>
+  </turbo-frame>

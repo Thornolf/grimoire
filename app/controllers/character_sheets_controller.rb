@@ -67,6 +67,7 @@ class CharacterSheetsController < ApplicationController
   def edit
     @character_sheet = CharacterSheet.find(params[:id])
     @mission = Mission.find(params[:mission_id])
+    @attribute = params[:locals][:attribute]&.to_sym
     @skills = Skill.where(default: true)
   end
 

@@ -1,9 +1,9 @@
-<turbo-frame id="sanity">
+<turbo-frame id="<%= dom_id(character_sheet, @attribute)%>">
   <div class="flex items-center">
-    <p><strong>Sanity (SAN):</strong></p>
+    <p><strong><%=humanize_stat_name(@attribute)%>:</strong></p>
 
     <%= form_with(model: character_sheet, class: "contents", data: { controller: "inline-edit" }) do |form| %>
-      <%= form.text_field :sanity,
+      <%= form.text_field @attribute,
         data: {
           inline_edit_target: "input",
           action: "blur->inline-edit#submitForm keydown.enter->inline-edit#submitForm:prevent keydown.esc->inline-edit#abort"

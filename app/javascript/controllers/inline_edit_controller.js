@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = [ "input" ]
 
   connect() {
-    console.log("hello")
     this.originalText = this.inputTarget.value
     this.focusInput()
     this.cursorToEnd()

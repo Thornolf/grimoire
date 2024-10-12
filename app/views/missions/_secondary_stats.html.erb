@@ -2,15 +2,7 @@
 <div class="grid grid-cols-2 gap-4 mb-4 p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg shadow-inner">
   <div><p><strong>Hit Points (HP):</strong> <%= character_sheet.hit_points %></p></div>
   <div><p><strong>Willpower Points (WP):</strong> <%= character_sheet.willpower_points %></p></div>
-  <turbo-frame id="sanity">
-    <div class="flex items-center">
-      <p><strong>Sanity (SAN):</strong> <%= character_sheet.sanity %></p>
-
-      <%= link_to edit_mission_character_sheet_path(character_sheet.mission, character_sheet), class: "text-blue-500 flex items-center" do %>
-        <%= icon "pencil", class: "w-4 h-4 inline-block mr-1" %>
-      <% end %>
-    </div>
-  </turbo-frame>
+  <%= render "missions/inline_edit_attribute", character_sheet: character_sheet, attribute: :sanity %>
   <div><p><strong>Breaking Point:</strong> <%= character_sheet.breaking_point %></p></div>
   <div><p><strong>Luck:</strong> <%= character_sheet.luck %></p></div>
 </div>
