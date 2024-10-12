@@ -167,7 +167,7 @@ class CharacterSheetsController < ApplicationController
       :name, :background, :employer, :age, :gender, :nationality, :motivation,
       :profession, :rank, :occupation_history, :strength, :dexterity,
       :intelligence, :power, :charisma, :constitution, :sanity,
-      :willpower_points, :breaking_point, :luck,
+      :willpower_points, :breaking_point, :luck, :hit_points,
       bounds_attributes: [ :id, :name, :description, :score, :_destroy ],
       skills: {}
     )

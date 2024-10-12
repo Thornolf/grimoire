@@ -16,9 +16,21 @@ module CharacterSheetsHelper
     top_stats.map { |stat_name, value| "#{stat_name.capitalize}: #{value}" }.join(", ")
   end
 
+  # Corrected humanize_stat_name method
   def humanize_stat_name(attribute)
-    if attribute == :sanity
-      "SANITY (SAN)"
+    case attribute
+    when :sanity
+      "Sanity (SAN)"
+    when :hit_points
+      "Hit Points (HP)"
+    when :willpower_points
+      "Willpower Points (WP)"
+    when :breaking_point
+      "Breaking Point (BP)"
+    when :luck
+      "Luck (LUK)"
+    else
+      attribute.to_s.humanize  # Fallback to humanize the attribute name if not explicitly defined
     end
   end
 end
