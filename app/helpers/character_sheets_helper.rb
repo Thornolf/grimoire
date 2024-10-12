@@ -29,6 +29,16 @@ module CharacterSheetsHelper
       "Breaking Point (BP)"
     when :luck
       "Luck (LUK)"
+    when :strength
+      "Strength (STR)"
+    when :constitution
+      "Constitution (CON)"
+    when :dexterity
+      "Dexterity (DEX)"
+    when :intelligence
+      "Intelligence (INT)"
+    when :charisma
+      "Charisma (CHA)"
     else
       attribute.to_s.humanize  # Fallback to humanize the attribute name if not explicitly defined
     end
