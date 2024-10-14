@@ -7,6 +7,15 @@
   <!-- Separator -->
   <hr class="border-gray-600 mb-4">
 
+  <!-- User Profile Picture -->
+  <div class="mb-4 text-center">
+    <%= image_tag(current_user.display_profile_picture, alt: 'Profile Picture', class: 'w-20 h-20 mx-auto rounded-full') %>
+    <p class="mt-2"><%= current_user.username %></p>
+  </div>
+
+  <!-- Separator -->
+  <hr class="border-gray-600 mb-4">
+
   <!-- Navigation Links -->
   <ul class="space-y-2 text-center">
     <li><%= link_to 'Sounds', sounds_path, class: 'hover:bg-gray-700 p-2 block rounded' %></li>
