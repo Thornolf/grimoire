@@ -75,7 +75,7 @@ class CharacterSheetsController < ApplicationController
   def update
     if @character_sheet.update(character_sheet_params.except(:skills))
       if @mission
-        redirect_to [ @mission, @character_sheet ], notice: "Character sheet was successfully updated."
+        redirect_to @mission, notice: "Character sheet was successfully updated."
       else
         redirect_to @character_sheet, notice: "Character sheet was successfully updated."
       end
@@ -159,7 +159,9 @@ class CharacterSheetsController < ApplicationController
 
   # Set the mission if mission_id is present
   def set_mission
-    @mission = Mission.find_by(id: params[:mission_id]) if params[:mission_id]
+    mission_id = params[:mission_id] || params[:character_sheet]&.dig(:mission_id)
+
+    @mission = Mission.find_by(id: mission_id) if mission_id
   end
 
   def character_sheet_params

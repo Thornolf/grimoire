@@ -1,18 +1,39 @@
-<details class="group mb-6">
-  <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
-    Bounds
-  </summary>
-  <% if character_sheet.bounds.any? %>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 p-4 bg-gray-50 rounded-lg shadow-inner">
-      <% character_sheet.bounds.each do |bound| %>
-        <div class="border-l-4 border-blue-600 bg-blue-50 p-4 rounded-lg">
-          <p class="text-lg font-semibold text-gray-900"><%= bound.name %></p>
-          <p class="text-gray-600 mb-2"><%= bound.description %></p>
-          <p class="text-gray-800"><strong>Score:</strong> <%= bound.score %></p>
+<%= form_with model: character_sheet, url: mission_character_sheet_path(@mission, character_sheet), local: true, method: :patch do |form| %>
+  <details class="group mb-6">
+    <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
+      Bounds
+    </summary>
+
+    <!-- Render the form for adding/editing bounds dynamically -->
+    <div class="mt-6">
+      <h2 class="text-2xl font-semibold mb-4">Add or Edit Bounds</h2>
+      <div data-controller="bounds">
+        <div id="bounds-list">
+          <%= form.fields_for :bounds do |bound_form| %>
+            <div class="mb-4 border border-gray-300 p-4 rounded-lg flex items-center space-x-4">
+              <div class="w-1/3">
+                <%= bound_form.label :name, "Bound Name", class: "block font-semibold mb-2" %>
+                <%= bound_form.text_field :name, class: "border border-gray-300 rounded w-full p-2" %>
+              </div>
+
+              <div class="w-1/3">
+                <%= bound_form.label :score, "Score", class: "block font-semibold mb-2" %>
+                <%= bound_form.number_field :score, class: "border border-gray-300 rounded w-full p-2", min: 0 %>
+              </div>
+
+              <div class="w-auto">
+                <%= link_to "Remove", "javascript:void(0)", data: { action: "click->bounds#removeBound" }, class: "text-red-500 hover:text-red-700 mt-2 block" %>
+                <%= bound_form.hidden_field :_destroy, value: false, data: { bounds_target: "removeField" } %>
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+
+        <!-- Button to add more bounds -->
+        <button type="button" class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-700" data-action="click->bounds#addBound">Add Bound</button>
+      </div>
     </div>
-  <% else %>
-    <p class="text-gray-500 italic">No bounds have been defined for this character sheet yet.</p>
-  <% end %>
-</details>
+
+    <%= form.submit "Save Bounds", class: "mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg" %>
+  </details>
+<% end %>
