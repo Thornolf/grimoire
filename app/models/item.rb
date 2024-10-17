@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  has_many :inventories
+  has_many :inventories, dependent: :destroy
   has_many :character_sheets, through: :inventories
 
   enum durability: { pristine: 0, good: 1, fair: 2, worn: 3, damaged: 4, ruined: 5 }

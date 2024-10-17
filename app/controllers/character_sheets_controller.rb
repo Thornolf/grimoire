@@ -71,18 +71,29 @@ class CharacterSheetsController < ApplicationController
     @skills = Skill.where(default: true)
   end
 
-  # Update action for both standalone and mission-based character sheets
   def update
     if @character_sheet.update(character_sheet_params.except(:skills))
-      if @mission
-        redirect_to @mission, notice: "Character sheet was successfully updated."
-      else
-        redirect_to @character_sheet, notice: "Character sheet was successfully updated."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @mission })
+        end
+
+        format.html do
+          if @mission.nil?
+            redirect_to @character_sheet, notice: "Character sheet was successfully updated."
+          end
+        end
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("character-sheet-#{@character_sheet.id}", partial: "missions/character_sheet_details", locals: { character_sheet: @character_sheet, mission: @mission })
+        end
+        format.html { render :edit }
       end
     end
   end
 
-  # Destroy action for both standalone and mission-based character sheets
   def destroy
     @character_sheet.destroy
     if @mission
@@ -169,7 +180,7 @@ class CharacterSheetsController < ApplicationController
       :name, :background, :employer, :age, :gender, :nationality, :motivation,
       :profession, :rank, :occupation_history, :strength, :dexterity,
       :intelligence, :power, :charisma, :constitution, :sanity,
-      :willpower_points, :breaking_point, :luck, :hit_points,
+      :willpower_points, :breaking_point, :luck, :hit_points, :recent_history,
       bounds_attributes: [ :id, :name, :description, :score, :_destroy ],
       skills: {}
     )

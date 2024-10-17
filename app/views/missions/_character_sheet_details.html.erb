@@ -1,5 +1,5 @@
 <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200" id="character-sheet-<%= character_sheet.id %>">
-  <details class="group">
+  <details class="group" open>
     <summary class="cursor-pointer flex justify-between items-center">
       <%= render partial: "missions/character_sheet_header", locals: { character_sheet: character_sheet, mission: @mission, user: current_user } %>
     </summary>
