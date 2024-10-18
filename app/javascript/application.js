@@ -1,4 +1,3 @@
-// app/javascript/application.js
 import { Application } from "@hotwired/stimulus"
 import { Turbo } from "@hotwired/turbo-rails"
 
@@ -16,6 +15,9 @@ import NewItemController from "./controllers/new_item_controller"
 import NewConditionController from "./controllers/new_condition_controller"
 import AutosaveController from "./controllers/autosave_controller"
 import InlineEditController from "./controllers/inline_edit_controller"
+
+// Import your new details_remember.js file
+import "./details_remember"
 
 const application = Application.start()
 

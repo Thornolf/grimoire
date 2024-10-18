@@ -1,5 +1,5 @@
 <%= form_with model: character_sheet, url: @mission ? mission_character_sheet_path(@mission, character_sheet) : character_sheet_path(character_sheet), local: true, method: :patch do |form| %>
-  <details class="group mb-6">
+  <details id="details-bounds-<%= character_sheet.id %>" class="group mb-6">
     <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
       Bounds
     </summary>

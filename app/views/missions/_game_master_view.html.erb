@@ -11,7 +11,7 @@
     </div>
   </details>
   </br>
-  <details class="group">
+  <details id="details-character-sheet-npcs-<%= current_user.id %>" class="group">
     <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-yellow-400 to-yellow-600 text-white py-2 px-4 rounded-lg shadow-lg">
       NPC Character Sheets
     </summary>
@@ -41,7 +41,7 @@
 <h2 class="text-3xl font-bold text-blue-600 mb-6 border-b-2 pb-2 border-gray-200">Handouts</h2>
 
 <% if @mission.handouts.any? %>
-  <details class="group">
+  <details id="details-character-sheet-handouts-<%= character_sheet.id %>" class="group">
     <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
       Handouts
     </summary>
@@ -90,7 +90,7 @@
 <!-- Sounds Section -->
 <h2 class="text-3xl font-bold text-blue-600 mb-6 border-b-2 pb-2 border-gray-200">Sounds</h2>
 
-<details class="group">
+<details id="details-character-sheet-sounds-<%= current_user.id %>" class="group">
   <summary class="cursor-pointer flex justify-between items-center text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg shadow-lg">
     Sounds
   </summary>
