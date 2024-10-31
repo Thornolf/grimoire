@@ -1,21 +1,19 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_item, only: [ :edit, :update, :destroy ]
 
   # GET /items
   def index
     @items = Item.where(type: nil)
   end
 
-  # GET /items/:id
-  def show
+  # GET /items/:id/edit
+  def edit
+    respond_to do |format|
+      format.html { render partial: "form", locals: { item: @item } }
+      format.turbo_stream
+    end
   end
 
-  # GET /items/new
-  def new
-    @item = Item.new
-  end
-
-  # POST /items
   def create
     @item = Item.new(item_params)
 
@@ -26,27 +24,23 @@ class ItemsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.turbo_stream { render :new }
-        format.html { render :new }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new-item-card", partial: "items/form", formats: [ :html ], locals: { item: @item }) }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
-  end
-
-  # GET /items/:id/edit
-  def edit
   end
 
   # PATCH/PUT /items/:id
   def update
     if @item.update(item_params)
       respond_to do |format|
+        format.html { redirect_to items_path, notice: "Item updated successfully." }
         format.turbo_stream
-        format.html { redirect_to items_path, notice: "Item was successfully updated." }
       end
     else
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("item-#{@item.id}", partial: "items/form", locals: { item: @item }) }
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream
       end
     end
   end
@@ -55,20 +49,18 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     respond_to do |format|
+      format.html { redirect_to items_path, notice: "Item deleted." }
       format.turbo_stream
-      format.html { redirect_to items_url, notice: "Item was successfully deleted." }
     end
   end
 
   private
 
-  # Set item for actions like show, edit, update, destroy
   def set_item
     @item = Item.find(params[:id])
   end
 
-  # Only allow trusted parameters
   def item_params
-    params.permit(:name, :description, :weight, :value, :durability, :rarity, :effect)
+    params.require(:item).permit(:name, :description, :weight, :value, :durability, :rarity, :effect)
   end
 end
