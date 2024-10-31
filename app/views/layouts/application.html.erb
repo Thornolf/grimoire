@@ -57,23 +57,28 @@
       </div>
     </nav>
 
+
     <!-- Main container -->
     <div class="flex">
-      <!-- Sidebar -->
-      <aside class="w-60 bg-gray-800 text-white p-4 h-screen fixed top-0 left-0 z-10 mt-16"> <!-- z-10 ensures sidebar is below navbar -->
-        <!-- Profile Picture -->
-        <div class="mb-4">
-          <%= image_tag current_user.display_profile_picture, alt: "Profile", class: "w-20 h-20 mx-auto rounded-full" %>
-        </div>
+      <% if user_signed_in? %>
+        <!-- Sidebar -->
+        <aside class="w-60 bg-gray-800 text-white p-4 h-screen fixed top-0 left-0 z-10 mt-16"> <!-- z-10 ensures sidebar is below navbar -->
+          <!-- Profile Picture -->
+          <div class="mb-4">
+            <%= image_tag current_user.display_profile_picture, alt: "Profile", class: "w-20 h-20 mx-auto rounded-full" %>
+          </div>
 
-        <!-- Separator -->
-        <hr class="border-gray-600 mb-4">
+          <!-- Separator -->
+          <hr class="border-gray-600 mb-4">
 
-        <!-- Navigation Links -->
-        <ul class="space-y-2 text-center">
-          <li><%= link_to 'Sounds', sounds_path, class: 'hover:bg-gray-700 p-2 block rounded' %></li>
-        </ul>
-      </aside>
+          <% if current_user.game_master? %>
+            <!-- Navigation Links -->
+            <ul class="space-y-2 text-center">
+              <li><%= link_to 'Sounds', sounds_path, class: 'hover:bg-gray-700 p-2 block rounded' %></li>
+            </ul>
+          <% end %>
+        </aside>
+      <% end %>
 
       <!-- Content with proper margin for sidebar -->
       <div class="flex-grow ml-60 mt-16 p-6"> <!-- Adjusted ml-60 for proper margin -->
